@@ -18,7 +18,7 @@ const Register = () => {
       login(data);
       // Initialize topics for new user
       await API.post('/topics/init');
-      navigate('/');
+      navigate('/welcome');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {

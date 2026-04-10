@@ -17,7 +17,7 @@ const Login = () => {
     try {
       const { data } = await API.post('/auth/login', form);
       login(data);
-      navigate('/');
+      navigate('/welcome');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

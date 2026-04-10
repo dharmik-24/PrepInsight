@@ -57,7 +57,12 @@ const Topics = () => {
                   style={{ width: `${data.percentage}%` }}
                 />
               </div>
-              <span>{data.percentage}% ({data.completed}/{data.total})</span>
+              <span>
+                {data.percentage}% ({data.completed}/{data.total})
+                {data.inProgress > 0 && (
+                  <span className="topic-progress-meta"> · {data.inProgress} in progress</span>
+                )}
+              </span>
             </div>
           ))}
         </div>

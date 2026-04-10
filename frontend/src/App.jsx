@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import WelcomeSplash from './pages/WelcomeSplash';
 import Dashboard from './pages/Dashboard';
 import StudyLog from './pages/StudyLog';
 import Topics from './pages/Topics';
@@ -12,17 +13,23 @@ import TestEngine from './pages/TestEngine';
 import Analysis from './pages/Analysis';
 import MistakeBook from './pages/MistakeBook';
 
-function App() {
+function AppLayout() {
+  const location = useLocation();
+  const hideNavbar = location.pathname === '/welcome';
+
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
+    <>
+      {!hideNavbar && <Navbar />}
+      <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
           {/* Protected Routes */}
+          <Route
+            path="/welcome"
+            element={<PrivateRoute><WelcomeSplash /></PrivateRoute>}
+          />
           <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/study-log" element={<PrivateRoute><StudyLog /></PrivateRoute>} />
           <Route path="/topics" element={<PrivateRoute><Topics /></PrivateRoute>} />
@@ -30,7 +37,16 @@ function App() {
           <Route path="/test/:id" element={<PrivateRoute><TestEngine /></PrivateRoute>} />
           <Route path="/analysis" element={<PrivateRoute><Analysis /></PrivateRoute>} />
           <Route path="/mistakes" element={<PrivateRoute><MistakeBook /></PrivateRoute>} />
-        </Routes>
+      </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AppLayout />
       </BrowserRouter>
     </AuthProvider>
   );

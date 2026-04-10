@@ -57,6 +57,12 @@ const Dashboard = () => {
   // Topic completion doughnut
   const totalTopics = Object.values(topics).reduce((s, t) => s + t.total, 0);
   const completedTopics = Object.values(topics).reduce((s, t) => s + t.completed, 0);
+  const completedTopicLabels = Object.entries(topics).flatMap(([subject, data]) =>
+    (data.topics || [])
+      .filter(topic => topic.status === 'completed')
+      .map(topic => `${subject} - ${topic.topicName}`)
+  );
+  const MAX_TOOLTIP_TOPICS = 10;
 
   const doughnutData = {
     labels: ['Completed', 'Remaining'],
@@ -64,6 +70,28 @@ const Dashboard = () => {
       data: [completedTopics, totalTopics - completedTopics],
       backgroundColor: ['#10b981', '#e5e7eb']
     }]
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          afterBody: (tooltipItems) => {
+            const isCompletedSlice = tooltipItems?.[0]?.dataIndex === 0;
+            if (!isCompletedSlice) return [];
+            if (!completedTopicLabels.length) return ['No completed topics yet'];
+            const visibleTopics = completedTopicLabels.slice(0, MAX_TOOLTIP_TOPICS);
+            const remainingCount = completedTopicLabels.length - visibleTopics.length;
+            return [
+              'Completed Topics:',
+              ...visibleTopics,
+              ...(remainingCount > 0 ? [`...and ${remainingCount} more`] : [])
+            ];
+          }
+        }
+      }
+    }
   };
 
   // Recent test performance
@@ -111,8 +139,8 @@ const Dashboard = () => {
         </div>
         <div className="chart-card">
           <h3>🗂️ Topic Completion</h3>
-          <Doughnut data={doughnutData} options={{ responsive: true }} />
-          <p className="text-center">{Math.round((completedTopics/totalTopics)*100)}% Complete</p>
+          <Doughnut data={doughnutData} options={doughnutOptions} />
+          <p className="text-center">{totalTopics ? Math.round((completedTopics / totalTopics) * 100) : 0}% Complete</p>
         </div>
       </div>
 

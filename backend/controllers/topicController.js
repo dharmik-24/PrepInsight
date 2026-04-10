@@ -42,12 +42,19 @@ const getTopics = async (req, res) => {
     // Calculate progress per subject
     const progress = {};
     for (const [subject, topicList] of Object.entries(grouped)) {
+      const total = topicList.length;
       const completed = topicList.filter(t => t.status === 'completed').length;
+      const inProgress = topicList.filter(t => t.status === 'in-progress').length;
+      // Bar reflects completion + partial credit for topics you're actively studying (e.g. via Study Log)
+      const percentage = Math.round(
+        ((completed + 0.5 * inProgress) / total) * 100
+      );
       progress[subject] = {
         topics: topicList,
         completed,
-        total: topicList.length,
-        percentage: Math.round((completed / topicList.length) * 100)
+        inProgress,
+        total,
+        percentage
       };
     }
 

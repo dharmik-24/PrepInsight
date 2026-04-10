@@ -1,4 +1,5 @@
 const StudyLog = require('../models/StudyLog');
+const Topic = require('../models/Topic');
 const GATE_SYLLABUS = require('../data/gateSyllabus');
 
 // @route POST /api/studylogs — Add a new study session
@@ -10,6 +11,21 @@ const addLog = async (req, res) => {
       subject, topic, duration, notes,
       date: date || Date.now()
     });
+
+    const studiedAt = log.date || new Date();
+    const topicDoc = await Topic.findOne({
+      user: req.user._id,
+      subject,
+      topicName: topic
+    });
+    if (topicDoc) {
+      topicDoc.lastStudied = studiedAt;
+      if (topicDoc.status === 'pending') {
+        topicDoc.status = 'in-progress';
+      }
+      await topicDoc.save();
+    }
+
     res.status(201).json(log);
   } catch (error) {
     res.status(500).json({ message: error.message });

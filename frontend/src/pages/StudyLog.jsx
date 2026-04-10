@@ -11,7 +11,7 @@ const StudyLog = () => {
   const [logs, setLogs] = useState([]);
   const [syllabus, setSyllabus] = useState({});
   const [subjects, setSubjects] = useState(FALLBACK_SUBJECTS);
-  const [form, setForm] = useState({ subject: FALLBACK_SUBJECTS[0], topic: '', duration: '', notes: '', date: '' });
+  const [form, setForm] = useState({ subject: '', topic: '', duration: '', notes: '', date: '' });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -34,7 +34,7 @@ const StudyLog = () => {
         setSubjects(subjectList);
         setForm(prev => ({
           ...prev,
-          subject: subjectList.includes(prev.subject) ? prev.subject : subjectList[0],
+          subject: subjectList.includes(prev.subject) ? prev.subject : '',
           topic: ''
         }));
       }
@@ -51,7 +51,7 @@ const StudyLog = () => {
       setMessage('✅ Study session logged!');
       setForm(prev => ({
         ...prev,
-        subject: subjects[0],
+        subject: '',
         topic: '',
         duration: '',
         notes: '',
@@ -95,12 +95,14 @@ const StudyLog = () => {
             <div className="form-group">
               <label>Subject</label>
               <select
+                required
                 value={form.subject}
                 onChange={e => {
                   const subject = e.target.value;
                   setForm(prev => ({ ...prev, subject, topic: '' }));
                 }}
               >
+                <option value="">Select subject</option>
                 {subjects.map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
@@ -110,6 +112,7 @@ const StudyLog = () => {
               <label>Topic</label>
               <select
                 required
+                disabled={!form.subject}
                 value={form.topic}
                 onChange={e => setForm(prev => ({ ...prev, topic: e.target.value }))}
               >
