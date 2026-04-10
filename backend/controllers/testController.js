@@ -72,4 +72,8 @@ const getTestById = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+module.exports = { seedTests, getTests, getTestById };
+=======
 module.exports = { seedTests, getTests, getTestById }; 
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222

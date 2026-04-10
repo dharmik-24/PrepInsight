@@ -1,4 +1,9 @@
 const StudyLog = require('../models/StudyLog');
+<<<<<<< HEAD
+const Topic = require('../models/Topic');
+const GATE_SYLLABUS = require('../data/gateSyllabus');
+=======
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 
 // @route POST /api/studylogs — Add a new study session
 const addLog = async (req, res) => {
@@ -9,6 +14,24 @@ const addLog = async (req, res) => {
       subject, topic, duration, notes,
       date: date || Date.now()
     });
+<<<<<<< HEAD
+
+    const studiedAt = log.date || new Date();
+    const topicDoc = await Topic.findOne({
+      user: req.user._id,
+      subject,
+      topicName: topic
+    });
+    if (topicDoc) {
+      topicDoc.lastStudied = studiedAt;
+      if (topicDoc.status === 'pending') {
+        topicDoc.status = 'in-progress';
+      }
+      await topicDoc.save();
+    }
+
+=======
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
     res.status(201).json(log);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -81,4 +104,13 @@ const deleteLog = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+// @route GET /api/studylogs/syllabus — Return GATE syllabus (subjects -> topics)
+const getSyllabus = async (_req, res) => {
+  res.json(GATE_SYLLABUS);
+};
+
+module.exports = { addLog, getLogs, getStats, deleteLog, getSyllabus };
+=======
 module.exports = { addLog, getLogs, getStats, deleteLog };
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
