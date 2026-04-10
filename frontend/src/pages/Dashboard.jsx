@@ -57,12 +57,15 @@ const Dashboard = () => {
   // Topic completion doughnut
   const totalTopics = Object.values(topics).reduce((s, t) => s + t.total, 0);
   const completedTopics = Object.values(topics).reduce((s, t) => s + t.completed, 0);
+<<<<<<< HEAD
   const completedTopicLabels = Object.entries(topics).flatMap(([subject, data]) =>
     (data.topics || [])
       .filter(topic => topic.status === 'completed')
       .map(topic => `${subject} - ${topic.topicName}`)
   );
   const MAX_TOOLTIP_TOPICS = 10;
+=======
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 
   const doughnutData = {
     labels: ['Completed', 'Remaining'],
@@ -72,6 +75,7 @@ const Dashboard = () => {
     }]
   };
 
+<<<<<<< HEAD
   const doughnutOptions = {
     responsive: true,
     plugins: {
@@ -94,6 +98,8 @@ const Dashboard = () => {
     }
   };
 
+=======
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
   // Recent test performance
   const recentResults = results.slice(0, 5);
   const avgScore = results.length
@@ -139,8 +145,13 @@ const Dashboard = () => {
         </div>
         <div className="chart-card">
           <h3>🗂️ Topic Completion</h3>
+<<<<<<< HEAD
           <Doughnut data={doughnutData} options={doughnutOptions} />
           <p className="text-center">{totalTopics ? Math.round((completedTopics / totalTopics) * 100) : 0}% Complete</p>
+=======
+          <Doughnut data={doughnutData} options={{ responsive: true }} />
+          <p className="text-center">{Math.round((completedTopics/totalTopics)*100)}% Complete</p>
+>>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
         </div>
       </div>
 
