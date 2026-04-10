@@ -100,7 +100,6 @@ a { color: var(--primary); text-decoration: none; }
 
 /* ─── Dashboard Stats ────────────────────────────────────────── */
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-<<<<<<< HEAD
 .stat-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -115,9 +114,6 @@ a { color: var(--primary); text-decoration: none; }
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
   border-color: #c7d2fe;
 }
-=======
-.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; box-shadow: var(--shadow); }
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 .stat-card .stat-icon { font-size: 1.8rem; }
 .stat-card h3 { font-size: 1.8rem; margin: 0.5rem 0 0.25rem; color: var(--primary); }
 .stat-card p { color: var(--text-muted); font-size: 0.85rem; }
@@ -160,10 +156,7 @@ a { color: var(--primary); text-decoration: none; }
 .progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 0.5rem; overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); border-radius: 4px; transition: width 0.3s; }
 .subject-card span { font-size: 0.8rem; color: var(--text-muted); }
-<<<<<<< HEAD
 .subject-card .topic-progress-meta { color: var(--warning); font-weight: 500; }
-=======
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 .topic-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .topic-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-radius: 8px; transition: all 0.2s; }
 .topic-name { font-size: 0.9rem; font-weight: 500; }
@@ -273,7 +266,6 @@ a { color: var(--primary); text-decoration: none; }
 .mistake-answers p { margin-bottom: 0.25rem; }
 .explanation { background: #fffbeb; border: 1px solid #fde68a; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem; margin-bottom: 1rem; line-height: 1.6; }
 
-<<<<<<< HEAD
 /* ─── Post-login welcome splash ──────────────────────────────── */
 .welcome-splash {
   min-height: 100vh;
@@ -372,8 +364,6 @@ a { color: var(--primary); text-decoration: none; }
   to { transform: scaleX(1); opacity: 1; }
 }
 
-=======
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 /* ─── Utilities ──────────────────────────────────────────────── */
 .no-data { color: var(--text-muted); text-align: center; padding: 2rem; font-style: italic; }
 .loader { display: flex; align-items: center; justify-content: center; height: 50vh; font-size: 1.1rem; color: var(--text-muted); }

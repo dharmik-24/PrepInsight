@@ -42,7 +42,6 @@ const getTopics = async (req, res) => {
     // Calculate progress per subject
     const progress = {};
     for (const [subject, topicList] of Object.entries(grouped)) {
-<<<<<<< HEAD
       const total = topicList.length;
       const completed = topicList.filter(t => t.status === 'completed').length;
       const inProgress = topicList.filter(t => t.status === 'in-progress').length;
@@ -56,14 +55,6 @@ const getTopics = async (req, res) => {
         inProgress,
         total,
         percentage
-=======
-      const completed = topicList.filter(t => t.status === 'completed').length;
-      progress[subject] = {
-        topics: topicList,
-        completed,
-        total: topicList.length,
-        percentage: Math.round((completed / topicList.length) * 100)
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
       };
     }
 

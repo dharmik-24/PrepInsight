@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 import API from '../api/axios';
 
-<<<<<<< HEAD
 const FALLBACK_SUBJECTS = [
-=======
-const SUBJECTS = [
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
   'Data Structures', 'Algorithms', 'Operating Systems', 'DBMS',
   'Computer Networks', 'TOC', 'Compiler Design', 'Digital Logic',
   'Mathematics', 'General Aptitude'
@@ -13,7 +9,6 @@ const SUBJECTS = [
 
 const StudyLog = () => {
   const [logs, setLogs] = useState([]);
-<<<<<<< HEAD
   const [syllabus, setSyllabus] = useState({});
   const [subjects, setSubjects] = useState(FALLBACK_SUBJECTS);
   const [form, setForm] = useState({ subject: '', topic: '', duration: '', notes: '', date: '' });
@@ -24,20 +19,12 @@ const StudyLog = () => {
     fetchLogs();
     fetchSyllabus();
   }, []);
-=======
-  const [form, setForm] = useState({ subject: SUBJECTS[0], topic: '', duration: '', notes: '', date: '' });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  useEffect(() => { fetchLogs(); }, []);
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
 
   const fetchLogs = async () => {
     const { data } = await API.get('/studylogs');
     setLogs(data);
   };
 
-<<<<<<< HEAD
   const fetchSyllabus = async () => {
     try {
       const { data } = await API.get('/studylogs/syllabus');
@@ -56,15 +43,12 @@ const StudyLog = () => {
     }
   };
 
-=======
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await API.post('/studylogs', form);
       setMessage('✅ Study session logged!');
-<<<<<<< HEAD
       setForm(prev => ({
         ...prev,
         subject: '',
@@ -73,9 +57,6 @@ const StudyLog = () => {
         notes: '',
         date: ''
       }));
-=======
-      setForm({ subject: SUBJECTS[0], topic: '', duration: '', notes: '', date: '' });
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
       fetchLogs();
     } catch (err) {
       setMessage('❌ Failed to log session');
@@ -99,11 +80,8 @@ const StudyLog = () => {
     return acc;
   }, {});
 
-<<<<<<< HEAD
   const topicsForSelectedSubject = syllabus[form.subject] || [];
 
-=======
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
   return (
     <div className="page-container">
       <h1>📖 Study Log</h1>
@@ -116,7 +94,6 @@ const StudyLog = () => {
           <div className="form-row">
             <div className="form-group">
               <label>Subject</label>
-<<<<<<< HEAD
               <select
                 required
                 value={form.subject}
@@ -129,15 +106,10 @@ const StudyLog = () => {
                 {subjects.map(s => (
                   <option key={s} value={s}>{s}</option>
                 ))}
-=======
-              <select value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}>
-                {SUBJECTS.map(s => <option key={s}>{s}</option>)}
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
               </select>
             </div>
             <div className="form-group">
               <label>Topic</label>
-<<<<<<< HEAD
               <select
                 required
                 disabled={!form.subject}
@@ -149,14 +121,6 @@ const StudyLog = () => {
                   <option key={topic} value={topic}>{topic}</option>
                 ))}
               </select>
-=======
-              <input
-                type="text" required
-                value={form.topic}
-                onChange={e => setForm({ ...form, topic: e.target.value })}
-                placeholder="e.g., Binary Trees"
-              />
->>>>>>> 0c63af6d2723c019f365484070b62713ce1ed222
             </div>
           </div>
           <div className="form-row">
