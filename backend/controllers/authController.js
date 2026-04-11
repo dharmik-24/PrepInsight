@@ -8,7 +8,7 @@ const generateToken = (id) => {
   });
 };
 
-// @route POST /api/auth/register
+//Registering User...
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -19,7 +19,6 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    // Create user (password hashed automatically via pre-save hook)
     const user = await User.create({ name, email, password });
 
     res.status(201).json({
@@ -33,12 +32,12 @@ const register = async (req, res) => {
   }
 };
 
-// @route POST /api/auth/login
+//For Login User...
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user and include password field (excluded by default)
+    // Find user and include password field bcs it is excluded by default...
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
@@ -61,12 +60,12 @@ const login = async (req, res) => {
   }
 };
 
-// @route GET /api/auth/me
+//Get the current User...
 const getMe = async (req, res) => {
-  res.json(req.user); // req.user set by authMiddleware
+  res.json(req.user); 
 };
 
-// @route PUT /api/auth/update
+//Update User Profile...
 const updateProfile = async (req, res) => {
   try {
     const { dailyGoal, theme } = req.body;
