@@ -9,10 +9,11 @@ const MockTestAttempt = () => {
   const [answers, setAnswers] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [finalScore, setFinalScore] = useState(0);
+  const [scoreDetails, setScoreDetails] = useState({ netScore: 0, positiveScore: 0, negativeScore: 0, totalMarks: 100, timeTakenSeconds: 0 });
   const [timeLeft, setTimeLeft] = useState(180 * 60);
   const [showIntro, setShowIntro] = useState(true);
   const [savedStatuses, setSavedStatuses] = useState({});
+  const [activeSection, setActiveSection] = useState('Aptitude');
 
   useEffect(() => {
     API.get(`/mock-tests/${id}`)
@@ -39,33 +40,37 @@ const MockTestAttempt = () => {
   };
 
   const calculateScore = () => {
-    let score = 0;
+    let positiveScore = 0;
+    let negativeScore = 0;
+    let totalMarks = 0;
 
     test.questions.forEach((q, idx) => {
+      totalMarks += q.marks;
       const ans = answers[idx];
 
       if (q.type === "mcq") {
-        if (ans === q.correctAnswer) score += q.marks;
-        else if (ans) score -= q.negativeMarks;
+        if (ans === q.correctAnswer) positiveScore += q.marks;
+        else if (ans && ans !== '') negativeScore += q.negativeMarks;
       }
 
       if (q.type === "msq") {
-        if (JSON.stringify(ans?.sort()) === JSON.stringify(q.correctAnswer.sort()))
-          score += q.marks;
+        if (ans && JSON.stringify(ans.sort()) === JSON.stringify(q.correctAnswer.sort()))
+          positiveScore += q.marks;
       }
 
       if (q.type === "nat") {
         // Use loose equality or parse float for NAT
-        if (ans == q.correctAnswer) score += q.marks;
+        if (ans && ans == q.correctAnswer) positiveScore += q.marks;
       }
     });
 
-    return score;
+    return { netScore: positiveScore - negativeScore, positiveScore, negativeScore, totalMarks };
   };
 
   const handleSubmit = () => {
-    const score = calculateScore();
-    setFinalScore(score);
+    const details = calculateScore();
+    details.timeTakenSeconds = (180 * 60) - timeLeft;
+    setScoreDetails(details);
     setSubmitted(true);
   };
 
@@ -135,15 +140,66 @@ const MockTestAttempt = () => {
   }
 
   if (submitted) {
+    const timeTakenMinutes = Math.floor(scoreDetails.timeTakenSeconds / 60);
+    const totalMinutes = 180;
+
+    let feedbackMessage = "";
+    let feedbackColor = "";
+    if (scoreDetails.netScore >= 70) {
+      feedbackMessage = "Congratulations, You are doing Great work. Keep it up";
+      feedbackColor = "#4caf50";
+    } else if (scoreDetails.netScore >= 50) {
+      feedbackMessage = "Good work done, practice a little more than usual";
+      feedbackColor = "#ff9800";
+    } else {
+      
+      feedbackMessage = "You need to get serious. Work harder";
+      feedbackColor = "#f44336";
+    }
+    
     return (
-      <div className="page-container">
-        <h1>{test.title} - Result</h1>
-        <div className="card" style={{ textAlign: 'center', padding: '3rem 1rem' }}>
-          <h2 style={{ marginBottom: '1rem', color: '#fff' }}>Test Submitted Successfully!</h2>
-          <h3 style={{ marginBottom: '2rem', fontSize: '2rem', color: '#4caf50' }}>Your Score: {finalScore}</h3>
-          <button className="btn-primary" onClick={() => navigate('/mock-tests')}>
-            Back to Mock Tests
-          </button>
+      <div className="page-container" style={{ maxWidth: '800px', margin: '-3rem auto 2rem', padding: '1rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: '#fff' }}>Test Submitted Successfully!</h1>
+          <p style={{ fontSize: '1.2rem', color: '#ccc', fontWeight: 'bold' }}>{test.title} - Performance Report</p>
+        </div>
+        
+        <div className="card" style={{ padding: '3rem', background: 'linear-gradient(145deg, #1e1e1e 0%, #252525 100%)', borderRadius: '16px', border: '1px solid #333', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h3 style={{ fontSize: '1.2rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>Net Marks</h3>
+            <div style={{ fontSize: '4.5rem', fontWeight: 'bold', color: scoreDetails.netScore >= 0 ? '#4caf50' : '#f44336', textShadow: scoreDetails.netScore >= 0 ? '0 0 20px rgba(76, 175, 80, 0.3)' : '0 0 20px rgba(244, 67, 54, 0.3)', lineHeight: '1' }}>
+              {scoreDetails.netScore} <span style={{ fontSize: '2rem', color: '#666' }}>/ {scoreDetails.totalMarks}</span>
+            </div>
+          </div>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2.5rem' }}>
+            <div style={{ background: 'rgba(76, 175, 80, 0.05)', border: '1px solid rgba(76, 175, 80, 0.2)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#4caf50', marginBottom: '0.5rem' }}>{scoreDetails.positiveScore}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
+              <div style={{ fontSize: '0.85rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px' }}>Positive Marks</div>
+            </div>
+            
+            <div style={{ background: 'rgba(244, 67, 54, 0.05)', border: '1px solid rgba(244, 67, 54, 0.2)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f44336', marginBottom: '0.5rem' }}>{scoreDetails.negativeScore}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
+              <div style={{ fontSize: '0.85rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px' }}>Negative Marks</div>
+            </div>
+            
+            <div style={{ background: 'rgba(33, 150, 243, 0.05)', border: '1px solid rgba(33, 150, 243, 0.2)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#2196f3', marginBottom: '0.5rem' }}>{timeTakenMinutes}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {totalMinutes}</span></div>
+              <div style={{ fontSize: '0.85rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px' }}>Time Taken (mins)</div>
+            </div>
+          </div>
+          
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem', padding: '1.5rem', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', border: `1px solid ${feedbackColor}40` }}>
+            <p style={{ fontSize: '1.3rem', fontWeight: 'bold', color: feedbackColor, margin: 0, letterSpacing: '0.5px' }}>
+              {feedbackMessage}
+            </p>
+          </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <button className="btn-primary" onClick={() => navigate('/mock-tests')} style={{ padding: '1rem 3rem', fontSize: '1.1rem', borderRadius: '30px', background: 'linear-gradient(45deg, #2196f3, #00bcd4)', border: 'none', boxShadow: '0 4px 15px rgba(33, 150, 243, 0.3)', cursor: 'pointer', transition: 'transform 0.2s', fontWeight: 'bold', color: '#fff' }}>
+              Back to Mock Tests
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -157,12 +213,35 @@ const MockTestAttempt = () => {
     return ans !== undefined && ans !== '';
   };
 
-  const handleNavigation = (newIndex) => {
+  const handleSaveAndNext = () => {
     setSavedStatuses(prev => ({
       ...prev,
       [currentQuestionIndex]: isAnswered(currentQuestionIndex)
     }));
+    if (currentQuestionIndex < test.questions.length - 1) {
+      const newIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(newIndex);
+      if (newIndex < 10) setActiveSection('Aptitude');
+      else setActiveSection('Technical');
+    }
+  };
+
+  const handleNavigation = (newIndex) => {
     setCurrentQuestionIndex(newIndex);
+    if (newIndex < 10) setActiveSection('Aptitude');
+    else setActiveSection('Technical');
+  };
+
+  const handleSectionChange = (section) => {
+    if (activeSection === section) return;
+    
+    const targetIndex = section === 'Aptitude' ? 0 : 10;
+    if (targetIndex >= test.questions.length) {
+      alert("This section does not have any questions in the current test.");
+      return;
+    }
+    
+    handleNavigation(targetIndex);
   };
 
   const handleClear = () => {
@@ -196,8 +275,26 @@ const MockTestAttempt = () => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '2rem', alignItems: 'start' }}>
-        <div className="card" style={{ padding: '2rem' }}>
-        <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '1rem', backgroundColor: '#1e1e1e', padding: '0.5rem', borderRadius: '8px', border: '1px solid #444' }}>
+            <button 
+              className={activeSection === 'Aptitude' ? 'btn-primary' : 'btn-secondary'}
+              onClick={() => handleSectionChange('Aptitude')}
+              style={{ flex: 1, padding: '0.75rem', margin: 0, fontSize: '1.1rem', fontWeight: 'bold' }}
+            >
+              Aptitude
+            </button>
+            <button 
+              className={activeSection === 'Technical' ? 'btn-primary' : 'btn-secondary'}
+              onClick={() => handleSectionChange('Technical')}
+              style={{ flex: 1, padding: '0.75rem', margin: 0, fontSize: '1.1rem', fontWeight: 'bold' }}
+            >
+              Technical
+            </button>
+          </div>
+
+          <div className="card" style={{ padding: '2rem' }}>
+          <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ margin: 0 }}>Question {currentQuestionIndex + 1} of {test.questions.length}</h3>
           <span style={{ color: '#aaa', fontSize: '0.9rem' }}>
             Marks: +{q.marks} | Negative: -{q.negativeMarks || 0}
@@ -273,9 +370,9 @@ const MockTestAttempt = () => {
             <button 
               className="btn-primary" 
               disabled={currentQuestionIndex === test.questions.length - 1}
-              onClick={() => handleNavigation(currentQuestionIndex + 1)}
+              onClick={handleSaveAndNext}
             >
-              Next
+            Save and Next
             </button>
 
             <button 
@@ -287,12 +384,16 @@ const MockTestAttempt = () => {
             </button>
           </div>
         </div>
+        </div>
       </div>
 
       <div className="card" style={{ padding: '1.5rem', maxHeight: '80vh', overflowY: 'auto' }}>
         <h3 style={{ marginTop: 0, marginBottom: '1rem', borderBottom: '1px solid #444', paddingBottom: '0.5rem' }}>Question Navigator</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))', gap: '8px' }}>
-          {Array.from({ length: 65 }).map((_, idx) => {
+          {Array.from({ length: 65 })
+            .map((_, i) => i)
+            .filter(idx => activeSection === 'Aptitude' ? idx < 10 : idx >= 10)
+            .map((idx) => {
             const current = currentQuestionIndex === idx;
             const valid = idx < test.questions.length;
             const answered = valid && savedStatuses[idx];
