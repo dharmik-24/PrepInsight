@@ -16,6 +16,8 @@ import TestEngine from './pages/TestEngine';
 import Analysis from './pages/Analysis';
 import MistakeBook from './pages/MistakeBook';
 import Profile from "./pages/Profile";
+import InfoSharing from './pages/InfoSharing';
+import AddMaterial from './pages/AddMaterial';
 
 import ResultPage from './pages/ResultPage';
 
@@ -48,6 +50,8 @@ function AppLayout() {
           <Route path="/mistakes" element={<PrivateRoute><MistakeBook /></PrivateRoute>} />
           <Route path="/result" element={<PrivateRoute><ResultPage /></PrivateRoute>} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/info-sharing" element={<PrivateRoute><InfoSharing /></PrivateRoute>} />
+          <Route path="/add-material" element={<PrivateRoute><AddMaterial /></PrivateRoute>} />
       </Routes>
     </>
   );

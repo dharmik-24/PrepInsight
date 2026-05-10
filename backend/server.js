@@ -23,6 +23,7 @@ app.use('/api/tests',     require('./routes/testRoutes'));
 app.use('/api/results',   require('./routes/resultRoutes'));
 app.use('/api/mistakes',  require('./routes/mistakeRoutes'));
 app.use('/api/mock-tests', require('./routes/mockTestRoutes'));
+app.use('/api/materials',  require('./routes/materialRoutes'));
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'PrepInsight API Running 🚀' }));
