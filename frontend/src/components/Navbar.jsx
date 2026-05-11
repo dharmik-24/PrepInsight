@@ -24,6 +24,7 @@ const Navbar = () => {
           <Link to="/tests">Tests</Link>
           <Link to="/analysis">Analysis</Link>
           <Link to="/mistakes">Mistake Book</Link>
+          <Link to="/info-sharing">Info. Sharing</Link>
           <Link to="/profile" className="nav-user">
           👤 {user.name}
           </Link>
