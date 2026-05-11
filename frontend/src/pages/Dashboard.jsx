@@ -144,6 +144,23 @@ const Dashboard = () => {
         </button>
       </div>
 
+      {/* Group Chats Banner */}
+      <div className="chart-card group-chats-banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', marginBottom: '20px', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 20px rgba(118, 75, 162, 0.2)' }}>
+        <div style={{ flex: '1 1 300px' }}>
+          <h2 style={{ margin: 0, color: 'white', fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '10px' }}>💬 Group Chats</h2>
+          <p style={{ margin: '10px 0 0 0', fontSize: '1.1rem', opacity: 0.9 }}>Join public discussion groups to solve doubts, share resources, and discuss concepts with peers in real-time.</p>
+        </div>
+        <button 
+          onClick={() => navigate('/groups')}
+          className="btn-primary"
+          style={{ backgroundColor: 'white', color: '#764ba2', border: 'none', padding: '12px 24px', fontWeight: 'bold', fontSize: '1.1rem', borderRadius: '8px', transition: 'transform 0.2s', cursor: 'pointer' }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+        >
+          Explore Groups →
+        </button>
+      </div>
+
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
