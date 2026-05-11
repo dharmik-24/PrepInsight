@@ -133,7 +133,16 @@ const Dashboard = () => {
 
   return (
     <div className="page-container">
-      <h1>Welcome back, {user.name}! 👋</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1>Welcome back, {user.name}! 👋</h1>
+        <button 
+          onClick={() => navigate('/info-sharing')}
+          className="btn-primary"
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px' }}
+        >
+          <span>🌐</span> Info. Sharing
+        </button>
+      </div>
 
       {/* Stats Cards */}
       <div className="stats-grid">
