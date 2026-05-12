@@ -191,9 +191,16 @@ const getResults = async (req, res) => {
 // Get rank prediction based on scores
 const getRankPrediction = async (req, res) => {
   try {
-    const results = await Result.find({ user: req.user._id });
+    const allResults = await Result.find({ user: req.user._id }).populate({
+      path: 'test',
+      match: { testType: 'full-mock' }
+    });
+    
+    // Filter out results where test is null (i.e. testType is not 'full-mock')
+    const results = allResults.filter(r => r.test != null);
+
     if (results.length === 0) {
-      return res.json({ message: 'No tests taken yet' });
+      return res.json({ message: 'No mock tests taken yet' });
     }
 
     // Average score across all mock tests

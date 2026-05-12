@@ -67,9 +67,27 @@ const MockTestAttempt = () => {
     return { netScore: positiveScore - negativeScore, positiveScore, negativeScore, totalMarks };
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const details = calculateScore();
-    details.timeTakenSeconds = (180 * 60) - timeLeft;
+    const timeTakenSeconds = (180 * 60) - timeLeft;
+    details.timeTakenSeconds = timeTakenSeconds;
+
+    const responses = test.questions.map((q, idx) => ({
+      questionId: q._id,
+      userAnswer: answers[idx] ?? null,
+      timeTaken: 0
+    }));
+
+    try {
+      await API.post('/results/submit', {
+        testId: id,
+        responses,
+        timeTaken: timeTakenSeconds
+      });
+    } catch (err) {
+      console.error('Submission failed:', err);
+    }
+
     setScoreDetails(details);
     setSubmitted(true);
   };
