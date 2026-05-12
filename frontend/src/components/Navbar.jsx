@@ -25,10 +25,14 @@ const Navbar = () => {
           <Link to="/analysis">Analysis</Link>
           <Link to="/mistakes">Mistake Book</Link>
           <Link to="/info-sharing">Info. Sharing</Link>
+           <Link to="/doubt-solver">
+  AI Doubt Solver
+</Link>
           <Link to="/groups">Group Chats</Link>
           <Link to="/profile" className="nav-user">
           👤 {user.name}
           </Link>
+         
           <button onClick={handleLogout} className="btn-logout">Logout</button>
         </div>
       )}

@@ -3,12 +3,16 @@ const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
 const dotenv = require('dotenv');
+dotenv.config();
 const cors = require('cors');
 const connectDB = require('./config/db');
+const doubtRoutes = require('./routes/doubtRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
-// Load env variables
-dotenv.config();
+
+
+
+
 
 // Connect to database
 connectDB();
@@ -38,6 +42,7 @@ app.use('/api/results',   require('./routes/resultRoutes'));
 app.use('/api/mistakes',  require('./routes/mistakeRoutes'));
 app.use('/api/mock-tests', require('./routes/mockTestRoutes'));
 app.use('/api/materials',  require('./routes/materialRoutes'));
+app.use('/api/doubts', doubtRoutes);
 app.use('/api/upload',     require('./routes/uploadRoutes'));
 
 // Serve uploaded images statically
@@ -61,4 +66,4 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`)); 
