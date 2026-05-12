@@ -913,3 +913,42 @@ a { color: var(--primary); text-decoration: none; }
 .modal-content h2 { margin-bottom: 1.5rem; color: var(--text); }
 .modal-actions { display: flex; gap: 1rem; margin-top: 2rem; }
 .modal-actions button { flex: 1; }
+
+/* AI Doubt Solver */
+.answer-box {
+  width: 100%;
+  max-width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+
+  border-radius: 10px;
+  background: #f5f5f5;
+
+  overflow-x: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+
+  box-sizing: border-box;
+}
+
+.answer-box pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  margin: 0;
+}
+
+.doubt-input {
+  width: 100%;
+  min-height: 140px;
+  padding: 15px;
+
+  border-radius: 10px;
+  border: 1px solid #ccc;
+
+  font-size: 16px;
+  resize: vertical;
+
+  box-sizing: border-box;
+}

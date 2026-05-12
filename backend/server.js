@@ -1,10 +1,15 @@
 const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config();
 const cors = require('cors');
 const connectDB = require('./config/db');
+const doubtRoutes = require('./routes/doubtRoutes');
 
 // Load env variables
-dotenv.config();
+// dotenv.config();
+
+
+
 
 // Connect to database
 connectDB();
@@ -24,6 +29,7 @@ app.use('/api/results',   require('./routes/resultRoutes'));
 app.use('/api/mistakes',  require('./routes/mistakeRoutes'));
 app.use('/api/mock-tests', require('./routes/mockTestRoutes'));
 app.use('/api/materials',  require('./routes/materialRoutes'));
+app.use('/api/doubts', doubtRoutes);
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'PrepInsight API Running 🚀' }));
