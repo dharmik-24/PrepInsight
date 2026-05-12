@@ -1,17 +1,16 @@
 [
   {
-<<<<<<< HEAD
     "id": "1778557286693",
     "sender": "Jineet Mehta",
     "message": "Hi",
     "imageUrl": null,
     "timestamp": "2026-05-12T03:41:26.693Z"
-=======
+  },
+  {
     "id": "1778557286495",
     "sender": "Dharmik Kansara",
     "message": "Hii",
     "imageUrl": null,
     "timestamp": "2026-05-12T03:41:26.495Z"
->>>>>>> 9b7ca77b007318413158ae64f5b79ccdcfca13e9
   }
 ]

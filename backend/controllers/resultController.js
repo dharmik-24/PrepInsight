@@ -191,43 +191,72 @@ const getResults = async (req, res) => {
 // Get rank prediction based on scores
 const getRankPrediction = async (req, res) => {
   try {
-    const allResults = await Result.find({ user: req.user._id }).populate({
-      path: 'test',
-      match: { testType: 'full-mock' }
-    });
+    // 1. Fetch only full-length mock tests for the user and sort ascending
+    const allResults = await Result.find({ user: req.user._id })
+      .populate({
+        path: 'test',
+        match: { testType: 'full-mock' }
+      })
+      .sort({ createdAt: 1 }); // Oldest to newest
     
     // Filter out results where test is null (i.e. testType is not 'full-mock')
-    const results = allResults.filter(r => r.test != null);
+    const mockResults = allResults.filter(r => r.test != null);
 
-    if (results.length === 0) {
-      return res.json({ message: 'No mock tests taken yet' });
+    if (mockResults.length === 0) {
+      return res.json({ message: 'Please attempt at least one full mock test to generate rank prediction.' });
     }
 
-    // Average score across all mock tests
-    const avgScore = results.reduce((sum, r) => sum + r.score, 0) / results.length;
-    const avgAccuracy = results.reduce((sum, r) => sum + r.accuracy, 0) / results.length;
+    // 2. Calculate weighted average score and average accuracy
+    let totalWeightedScore = 0;
+    let totalWeight = 0;
+    let totalAccuracy = 0;
 
-    // Simple rank estimation formula (based on GATE 2023 statistics)
-    // Adjust thresholds based on real GATE data
-    let predictedRank;
-    const totalAppearances = 100000; // approx GATE CS aspirants
+    mockResults.forEach((result, index) => {
+      const weight = index + 1; // Progressive weights: 1 for first test, 2 for second, etc.
+      totalWeightedScore += result.score * weight;
+      totalWeight += weight;
+      totalAccuracy += result.accuracy;
+    });
 
-    if (avgScore >= 70) predictedRank = Math.round(totalAppearances * 0.001);
-    else if (avgScore >= 60) predictedRank = Math.round(totalAppearances * 0.005);
-    else if (avgScore >= 50) predictedRank = Math.round(totalAppearances * 0.02);
-    else if (avgScore >= 40) predictedRank = Math.round(totalAppearances * 0.08);
-    else if (avgScore >= 30) predictedRank = Math.round(totalAppearances * 0.2);
-    else predictedRank = Math.round(totalAppearances * 0.5);
+    const avgScore = totalWeightedScore / totalWeight;
+    const avgAccuracy = totalAccuracy / mockResults.length;
 
+    // 3. Rank Prediction Logic (Exponential Decay)
+    const totalCandidates = 200000;
+    
+    // Clamp score between 0 and 100
+    const normalizedScore = Math.max(0, Math.min(100, avgScore));
+
+    let predictedRank = totalCandidates * Math.exp(-0.09 * normalizedScore);
+
+    // 4. Accuracy Adjustments
+    if (avgAccuracy >= 90) {
+      predictedRank *= 0.8;
+    } else if (avgAccuracy >= 80) {
+      predictedRank *= 0.9;
+    } else if (avgAccuracy < 60) {
+      predictedRank *= 1.15;
+    }
+
+    // 5. Prevent impossible values
+    predictedRank = Math.max(1, Math.round(predictedRank));
+
+    // 6. Prediction range
+    const lowerBound = Math.max(1, Math.round(predictedRank * 0.8));
+    const upperBound = Math.max(1, Math.round(predictedRank * 1.2));
+
+    // 7. Format Response
     res.json({
-      avgScore: avgScore.toFixed(1),
-      avgAccuracy: avgAccuracy.toFixed(1),
+      avgScore: Number(avgScore.toFixed(2)),
+      avgAccuracy: Number(avgAccuracy.toFixed(2)),
       predictedRank,
-      totalTests: results.length,
-      note: 'Prediction based on mock test performance. Actual rank may vary.'
+      predictedRange: `${lowerBound} - ${upperBound}`,
+      totalTests: mockResults.length,
+      note: 'Prediction based on full mock tests. Exponential decay model with recent-test weighting applied.'
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Rank prediction error:', error);
+    res.status(500).json({ message: 'Failed to generate rank prediction.' });
   }
 };
 

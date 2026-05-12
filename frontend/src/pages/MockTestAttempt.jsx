@@ -186,18 +186,18 @@ const MockTestAttempt = () => {
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h3 style={{ fontSize: '1.2rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>Net Marks</h3>
             <div style={{ fontSize: '4.5rem', fontWeight: 'bold', color: scoreDetails.netScore >= 0 ? '#4caf50' : '#f44336', textShadow: scoreDetails.netScore >= 0 ? '0 0 20px rgba(76, 175, 80, 0.3)' : '0 0 20px rgba(244, 67, 54, 0.3)', lineHeight: '1' }}>
-              {scoreDetails.netScore} <span style={{ fontSize: '2rem', color: '#666' }}>/ {scoreDetails.totalMarks}</span>
+              {scoreDetails.netScore % 1 === 0 ? scoreDetails.netScore : scoreDetails.netScore.toFixed(2)} <span style={{ fontSize: '2rem', color: '#666' }}>/ {scoreDetails.totalMarks}</span>
             </div>
           </div>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2.5rem' }}>
             <div style={{ background: 'rgba(76, 175, 80, 0.05)', border: '1px solid rgba(76, 175, 80, 0.2)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#4caf50', marginBottom: '0.5rem' }}>{scoreDetails.positiveScore}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#4caf50', marginBottom: '0.5rem' }}>{scoreDetails.positiveScore % 1 === 0 ? scoreDetails.positiveScore : scoreDetails.positiveScore.toFixed(2)}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
               <div style={{ fontSize: '0.85rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px' }}>Positive Marks</div>
             </div>
             
             <div style={{ background: 'rgba(244, 67, 54, 0.05)', border: '1px solid rgba(244, 67, 54, 0.2)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f44336', marginBottom: '0.5rem' }}>{scoreDetails.negativeScore}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f44336', marginBottom: '0.5rem' }}>{scoreDetails.negativeScore % 1 === 0 ? scoreDetails.negativeScore : scoreDetails.negativeScore.toFixed(2)}<span style={{ fontSize: '1.2rem', color: '#666', fontWeight: 'normal' }}> / {scoreDetails.totalMarks}</span></div>
               <div style={{ fontSize: '0.85rem', color: '#aaa', textTransform: 'uppercase', letterSpacing: '1px' }}>Negative Marks</div>
             </div>
             
@@ -213,7 +213,24 @@ const MockTestAttempt = () => {
             </p>
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+            <button className="btn-secondary" onClick={() => {
+              const idBasedAnswers = {};
+              test.questions.forEach((q, idx) => {
+                idBasedAnswers[q._id] = answers[idx] ?? null;
+              });
+              
+              navigate('/result', {
+                state: {
+                  test,
+                  answers: idBasedAnswers,
+                  timeTaken: scoreDetails.timeTakenSeconds,
+                  result: null
+                }
+              });
+            }} style={{ padding: '1rem 3rem', fontSize: '1.1rem', borderRadius: '30px', background: 'transparent', border: '2px solid #2196f3', color: '#2196f3', cursor: 'pointer', transition: 'all 0.2s', fontWeight: 'bold' }}>
+              View Detailed Analysis
+            </button>
             <button className="btn-primary" onClick={() => navigate('/mock-tests')} style={{ padding: '1rem 3rem', fontSize: '1.1rem', borderRadius: '30px', background: 'linear-gradient(45deg, #2196f3, #00bcd4)', border: 'none', boxShadow: '0 4px 15px rgba(33, 150, 243, 0.3)', cursor: 'pointer', transition: 'transform 0.2s', fontWeight: 'bold', color: '#fff' }}>
               Back to Mock Tests
             </button>

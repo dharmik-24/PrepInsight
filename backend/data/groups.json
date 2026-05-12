@@ -4,11 +4,8 @@
     "groupName": "Aptitude Discussion Group",
     "description": "Discuss general aptitude, quantitative reasoning, logical deduction, etc.",
     "members": [
-<<<<<<< HEAD
-      "Jineet Mehta"
-=======
+      "Jineet Mehta",
       "ABC"
->>>>>>> 9b7ca77b007318413158ae64f5b79ccdcfca13e9
     ]
   },
   {
@@ -22,11 +19,8 @@
     "groupName": "Discrete Maths Discussion Group",
     "description": "Discuss set theory, graph theory, combinatorics, and logic.",
     "members": [
-<<<<<<< HEAD
-      "Jineet Mehta"
-=======
+      "Jineet Mehta",
       "Dharmik Kansara"
->>>>>>> 9b7ca77b007318413158ae64f5b79ccdcfca13e9
     ]
   },
   {
