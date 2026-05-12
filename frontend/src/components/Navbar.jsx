@@ -28,6 +28,7 @@ const Navbar = () => {
            <Link to="/doubt-solver">
   AI Doubt Solver
 </Link>
+          <Link to="/groups">Group Chats</Link>
           <Link to="/profile" className="nav-user">
           👤 {user.name}
           </Link>

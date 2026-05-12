@@ -1,15 +1,9 @@
 const Test = require('../models/Test');
 const { QUESTION_BANK } = require('../data/questionBank');
 const GATE_SYLLABUS = require('../data/gateSyllabus');
-
-const TEST_BLUEPRINT = [
-  { type: 'mcq', marks: 1, count: 2 },
-  { type: 'mcq', marks: 2, count: 4 },
-  { type: 'msq', marks: 1, count: 2 },
-  { type: 'msq', marks: 2, count: 3 },
-  { type: 'nat', marks: 1, count: 1 },
-  { type: 'nat', marks: 2, count: 3 }
-];
+const { TEST_BLUEPRINT, TEST_CONSTRAINTS } = require('../constants/testBlueprint');
+const { generateSubjectWiseTest } = require('../services/testGenerationService');
+const AppError = require('../utils/AppError');
 
 const cloneQuestion = (question) => ({
   questionText: question.questionText,
@@ -136,14 +130,56 @@ const seedTests = async (req, res) => {
     res.json({
       message: `Seeded ${created} subject-wise tests successfully`,
       blueprint: {
-        totalQuestions: 15,
-        durationMinutes: 45,
-        totalMarks: 25,
+        totalQuestions: TEST_CONSTRAINTS.totalQuestions,
+        durationMinutes: TEST_CONSTRAINTS.durationMinutes,
+        totalMarks: TEST_CONSTRAINTS.totalMarks,
         distribution: { mcq: 6, msq: 5, nat: 4, oneMark: 5, twoMark: 10 }
       }
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+const getSubjects = async (req, res) => {
+  res.json({
+    subjects: Object.keys(GATE_SYLLABUS),
+    blueprint: TEST_CONSTRAINTS
+  });
+};
+
+const generateTest = async (req, res, next) => {
+  try {
+    const { subject } = req.body;
+    try {
+      const { test, cached } = await generateSubjectWiseTest({ subject });
+      return res.status(201).json({
+        message: cached ? 'Using recently generated test' : 'AI generated test successfully',
+        cached,
+        test
+      });
+    } catch (aiError) {
+      console.warn(`[Fallback] AI generation failed (${aiError.code || aiError.message}). Using offline question bank.`);
+      const questions = buildSubjectWiseQuestions(subject);
+      const totalMarks = questions.reduce((sum, q) => sum + q.marks, 0);
+      const test = await Test.create({
+        title: `${subject} - Subject-wise Test (Offline Fallback)`,
+        testType: 'topic-wise',
+        subject,
+        duration: TEST_CONSTRAINTS.durationMinutes,
+        questions,
+        totalMarks
+      });
+      
+      return res.status(201).json({
+        message: 'AI service busy or failed validation. Generated test using offline question bank.',
+        cached: false,
+        test
+      });
+    }
+  } catch (error) {
+    if (error instanceof AppError) return next(error);
+    next(new AppError('Unable to generate test right now', 502, 'TEST_GENERATION_FAILED'));
   }
 };
 
@@ -172,4 +208,4 @@ const getTestById = async (req, res) => {
   }
 };
 
-module.exports = { seedTests, getTests, getTestById };
+module.exports = { seedTests, getSubjects, generateTest, getTests, getTestById };

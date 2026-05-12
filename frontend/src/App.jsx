@@ -18,7 +18,12 @@ import MistakeBook from './pages/MistakeBook';
 import Profile from "./pages/Profile";
 import InfoSharing from './pages/InfoSharing';
 import AddMaterial from './pages/AddMaterial';
+<<<<<<< HEAD
 import DoubtSolver from './pages/DoubtSolver';
+=======
+import GroupList from './pages/GroupList';
+import GroupChat from './pages/GroupChat';
+>>>>>>> 30a572f00109740b802c46d0b1a7f22e58ad0e29
 
 import ResultPage from './pages/ResultPage';
 
@@ -57,6 +62,8 @@ function AppLayout() {
   path="/doubt-solver"
   element={<DoubtSolver />}
 />
+          <Route path="/groups" element={<PrivateRoute><GroupList /></PrivateRoute>} />
+          <Route path="/groups/:groupId" element={<PrivateRoute><GroupChat /></PrivateRoute>} />
       </Routes>
 
     </>

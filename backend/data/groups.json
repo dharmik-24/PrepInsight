@@ -1,0 +1,82 @@
+[
+  {
+    "groupId": "aptitude",
+    "groupName": "Aptitude Discussion Group",
+    "description": "Discuss general aptitude, quantitative reasoning, logical deduction, etc.",
+    "members": []
+  },
+  {
+    "groupId": "engg-maths",
+    "groupName": "Engineering Maths Discussion Group",
+    "description": "Discuss calculus, linear algebra, probability, and complex variables.",
+    "members": []
+  },
+  {
+    "groupId": "discrete-maths",
+    "groupName": "Discrete Maths Discussion Group",
+    "description": "Discuss set theory, graph theory, combinatorics, and logic.",
+    "members": []
+  },
+  {
+    "groupId": "c-programming",
+    "groupName": "C Programming Discussion Group",
+    "description": "Discuss pointers, memory management, arrays, and basics of C.",
+    "members": []
+  },
+  {
+    "groupId": "dsa",
+    "groupName": "Data Structures Discussion Group",
+    "description": "Discuss arrays, linked lists, trees, graphs, and hashing.",
+    "members": []
+  },
+  {
+    "groupId": "algo",
+    "groupName": "Algorithms Discussion Group",
+    "description": "Discuss sorting, searching, greedy, divide and conquer, dynamic programming etc.",
+    "members": []
+  },
+  {
+    "groupId": "os",
+    "groupName": "OS Discussion Group",
+    "description": "Discuss deadlocks, scheduling, memory management etc.",
+    "members": []
+  },
+  {
+    "groupId": "toc",
+    "groupName": "TOC Discussion Group",
+    "description": "Discuss automata, regular expressions, context-free grammars, and Turing machines.",
+    "members": []
+  },
+  {
+    "groupId": "cn",
+    "groupName": "CN Discussion Group",
+    "description": "Discuss OSI model, TCP/IP, routing, subnetting etc.",
+    "members": []
+  },
+  {
+    "groupId": "coa",
+    "groupName": "COA Discussion Group",
+    "description": "Discuss instruction pipelines, memory hierarchy, cache, and microprocessors.",
+    "members": [
+      "Jineet Mehta"
+    ]
+  },
+  {
+    "groupId": "compiler-design",
+    "groupName": "Compiler Design Discussion Group",
+    "description": "Discuss lexical analysis, parsing, syntax translation, and optimization.",
+    "members": []
+  },
+  {
+    "groupId": "digital-logic",
+    "groupName": "Digital Logic Discussion Group",
+    "description": "Discuss Boolean algebra, combinational and sequential circuits, and logic gates.",
+    "members": []
+  },
+  {
+    "groupId": "dbms",
+    "groupName": "DBMS Discussion Group",
+    "description": "Discuss normalization, SQL, transactions, indexing etc.",
+    "members": []
+  }
+]

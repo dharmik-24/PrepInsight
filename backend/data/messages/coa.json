@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1778509383066",
+    "sender": "Jineet Mehta",
+    "message": "Hi everyone",
+    "imageUrl": null,
+    "timestamp": "2026-05-11T14:23:03.066Z"
+  },
+  {
+    "id": "1778509625118",
+    "sender": "Jineet Mehta",
+    "message": "Hi",
+    "imageUrl": null,
+    "timestamp": "2026-05-11T14:27:05.118Z"
+  },
+  {
+    "id": "1778509637153",
+    "sender": "Jineet Mehta",
+    "message": "",
+    "imageUrl": "http://localhost:5000/uploads/1778509637140-485741401.png",
+    "timestamp": "2026-05-11T14:27:17.153Z"
+  }
+]
