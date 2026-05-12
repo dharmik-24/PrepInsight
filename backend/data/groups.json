@@ -15,13 +15,17 @@
     "groupId": "discrete-maths",
     "groupName": "Discrete Maths Discussion Group",
     "description": "Discuss set theory, graph theory, combinatorics, and logic.",
-    "members": []
+    "members": [
+      "Dharmik Kansara"
+    ]
   },
   {
     "groupId": "c-programming",
     "groupName": "C Programming Discussion Group",
     "description": "Discuss pointers, memory management, arrays, and basics of C.",
-    "members": []
+    "members": [
+      "Dharmik Kansara"
+    ]
   },
   {
     "groupId": "dsa",
@@ -58,7 +62,8 @@
     "groupName": "COA Discussion Group",
     "description": "Discuss instruction pipelines, memory hierarchy, cache, and microprocessors.",
     "members": [
-      "Jineet Mehta"
+      "Jineet Mehta",
+      "Dharmik Kansara"
     ]
   },
   {
