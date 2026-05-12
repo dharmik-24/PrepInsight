@@ -3,7 +3,9 @@
     "groupId": "aptitude",
     "groupName": "Aptitude Discussion Group",
     "description": "Discuss general aptitude, quantitative reasoning, logical deduction, etc.",
-    "members": []
+    "members": [
+      "ABC"
+    ]
   },
   {
     "groupId": "engg-maths",
@@ -58,7 +60,8 @@
     "groupName": "COA Discussion Group",
     "description": "Discuss instruction pipelines, memory hierarchy, cache, and microprocessors.",
     "members": [
-      "Jineet Mehta"
+      "Jineet Mehta",
+      "ABC"
     ]
   },
   {

@@ -9,8 +9,7 @@ const connectDB = require('./config/db');
 const doubtRoutes = require('./routes/doubtRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
-// Load env variables
-// dotenv.config();
+
 
 
 
@@ -43,9 +42,7 @@ app.use('/api/results',   require('./routes/resultRoutes'));
 app.use('/api/mistakes',  require('./routes/mistakeRoutes'));
 app.use('/api/mock-tests', require('./routes/mockTestRoutes'));
 app.use('/api/materials',  require('./routes/materialRoutes'));
-<<<<<<< HEAD
 app.use('/api/doubts', doubtRoutes);
-=======
 app.use('/api/upload',     require('./routes/uploadRoutes'));
 
 // Serve uploaded images statically
@@ -61,7 +58,6 @@ app.get('/api/groups', async (req, res) => {
     res.status(500).json({ message: 'Failed to load groups' });
   }
 });
->>>>>>> 30a572f00109740b802c46d0b1a7f22e58ad0e29
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'PrepInsight API Running 🚀' }));
@@ -70,4 +66,4 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`)); 
