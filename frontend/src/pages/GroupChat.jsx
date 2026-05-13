@@ -56,9 +56,15 @@ const GroupChat = () => {
     const newSocket = io(SOCKET_URL);
     setSocket(newSocket);
 
-    newSocket.on('connect', () => {
+    const handleJoin = () => {
       newSocket.emit('joinGroup', { groupId, user });
-    });
+    };
+
+    if (newSocket.connected) {
+      handleJoin();
+    }
+
+    newSocket.on('connect', handleJoin);
 
     newSocket.on('loadMessages', (loadedMessages) => {
       setMessages(loadedMessages);
