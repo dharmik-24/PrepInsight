@@ -4,6 +4,7 @@
     "groupName": "Aptitude Discussion Group",
     "description": "Discuss general aptitude, quantitative reasoning, logical deduction, etc.",
     "members": [
+      "Jineet Mehta",
       "ABC"
     ]
   },
@@ -18,6 +19,7 @@
     "groupName": "Discrete Maths Discussion Group",
     "description": "Discuss set theory, graph theory, combinatorics, and logic.",
     "members": [
+      "Jineet Mehta",
       "Dharmik Kansara"
     ]
   },
@@ -57,7 +59,9 @@
     "groupId": "cn",
     "groupName": "CN Discussion Group",
     "description": "Discuss OSI model, TCP/IP, routing, subnetting etc.",
-    "members": []
+    "members": [
+      "Jineet Mehta"
+    ]
   },
   {
     "groupId": "coa",

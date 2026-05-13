@@ -80,7 +80,7 @@ const Analysis = () => {
       <h1>📊 Performance Analysis</h1>
 
       {/* Rank Predictor */}
-      {rankData && rankData.predictedRank && (
+      {rankData && rankData.predictedRank ? (
         <div className="card rank-card">
           <h3>🏅 GATE Rank Prediction</h3>
           <div className="rank-stats">
@@ -88,10 +88,15 @@ const Analysis = () => {
             <div className="rank-details">
               <p>Avg Score: <strong>{rankData.avgScore}</strong></p>
               <p>Avg Accuracy: <strong>{rankData.avgAccuracy}%</strong></p>
-              <p>Tests Taken: <strong>{rankData.totalTests}</strong></p>
+              <p>Mock Tests Taken: <strong>{rankData.totalTests}</strong></p>
             </div>
           </div>
           <p className="rank-note">{rankData.note}</p>
+        </div>
+      ) : (
+        <div className="card rank-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '30px', opacity: 0.8 }}>
+          <h3 style={{ margin: 0, marginBottom: '10px' }}>🏅 GATE Rank Prediction</h3>
+          <p style={{ color: '#6c757d', fontSize: '1.1rem', margin: 0 }}>Take your first Mock Test to unlock your rank prediction!</p>
         </div>
       )}
 
