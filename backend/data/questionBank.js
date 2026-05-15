@@ -41,7 +41,7 @@ const GATE_SYLLABUS = {
     'Sequential Circuits', 'Flip-Flops', 'Counters and Registers',
     'Number Systems', 'K-Map Minimization'
   ],
-  'Mathematics': [
+  'Engineering Mathematics': [
     'Propositional Logic', 'Set Theory', 'Relations and Functions',
     'Graph Theory', 'Combinatorics', 'Probability',
     'Linear Algebra', 'Calculus', 'Numerical Methods'
@@ -331,7 +331,7 @@ const GATE_SYLLABUS = {
     questionText: "If an algorithm has complexity O(n log n), then for n=8 and log base 2, n log n equals:",
     type: "nat",
     correctAnswer: "24",
-    explanation: "8 × log2(8) = 8 × 3 = 24.",
+    explanation: "8 x log2(8) = 8 x 3 = 24.",
     subject: "Algorithms", topic: "Complexity Analysis", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
@@ -384,7 +384,7 @@ const GATE_SYLLABUS = {
     type: "mcq",
     options: ["FIFO", "LRU", "Optimal", "LFU"],
     correctAnswer: "FIFO",
-    explanation: "Belady’s anomaly is associated with FIFO.",
+    explanation: "Belady's anomaly is associated with FIFO.",
     subject: "Operating Systems", topic: "Memory Management", difficulty: "medium",
     marks: 1, negativeMarks: 0.33
   },
@@ -491,7 +491,7 @@ const GATE_SYLLABUS = {
     type: "mcq",
     options: ["Banker's Algorithm", "FIFO", "Round Robin", "LRU"],
     correctAnswer: "Banker's Algorithm",
-    explanation: "Banker’s algorithm uses Max, Allocation, Need matrices.",
+    explanation: "Banker's algorithm uses Max, Allocation, Need matrices.",
     subject: "Operating Systems", topic: "Deadlocks", difficulty: "hard",
     marks: 2, negativeMarks: 0.66
   },
@@ -797,7 +797,7 @@ const GATE_SYLLABUS = {
     questionText: "For a DFA with 5 states over binary alphabet, total transitions are:",
     type: "nat",
     correctAnswer: "10",
-    explanation: "Each state has 2 outgoing transitions. Total = 5 × 2 = 10.",
+    explanation: "Each state has 2 outgoing transitions. Total = 5 x 2 = 10.",
     subject: "TOC", topic: "Regular Languages and FA", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
@@ -1110,7 +1110,7 @@ const GATE_SYLLABUS = {
     options: ["real", "integer", "float", "decimal"],
     correctAnswer: "float",
     explanation: "float is a standard built-in data type in C.",
-    subject: "C", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
+    subject: "C Programming", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1120,7 +1120,7 @@ const GATE_SYLLABUS = {
     options: ["2", "2.5", "3", "Compilation Error"],
     correctAnswer: "2",
     explanation: "Integer division truncates fractional part.",
-    subject: "C", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
+    subject: "C Programming", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1130,7 +1130,7 @@ const GATE_SYLLABUS = {
     options: ["&", "*", "%", "->"],
     correctAnswer: "*",
     explanation: "* is dereference operator.",
-    subject: "C", topic: "Pointers", difficulty: "easy",
+    subject: "C Programming", topic: "Pointers", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1140,7 +1140,7 @@ const GATE_SYLLABUS = {
     options: ["for", "while", "do-while", "repeat-until"],
     correctAnswer: ["for", "while", "do-while"],
     explanation: "repeat-until is not part of standard C.",
-    subject: "C", topic: "Control Flow (if/else, loops, switch)", difficulty: "easy",
+    subject: "C Programming", topic: "Control Flow (if/else, loops, switch)", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1149,7 +1149,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "1",
     explanation: "char occupies 1 byte.",
-    subject: "C", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
+    subject: "C Programming", topic: "Basics of C (Data Types, Operators)", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1159,7 +1159,7 @@ const GATE_SYLLABUS = {
     options: ["3", "4", "5", "Compilation Error"],
     correctAnswer: "4",
     explanation: "strlen counts characters excluding null terminator.",
-    subject: "C", topic: "Arrays and Strings in C", difficulty: "medium",
+    subject: "C Programming", topic: "Arrays and Strings in C", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1169,7 +1169,7 @@ const GATE_SYLLABUS = {
     options: ["malloc()", "calloc()", "realloc()", "delete()"],
     correctAnswer: ["malloc()", "calloc()", "realloc()"],
     explanation: "delete() belongs to C++, not C.",
-    subject: "C", topic: "Dynamic Memory Allocation", difficulty: "medium",
+    subject: "C Programming", topic: "Dynamic Memory Allocation", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1179,7 +1179,7 @@ const GATE_SYLLABUS = {
     options: ["a[0]", "a[1]", "a[2]", "a[3]"],
     correctAnswer: "a[2]",
     explanation: "Pointer arithmetic moves to third element.",
-    subject: "C", topic: "Pointers", difficulty: "medium",
+    subject: "C Programming", topic: "Pointers", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1188,7 +1188,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "5",
     explanation: "Each recursive call creates one stack frame.",
-    subject: "C", topic: "Functions and Recursion", difficulty: "medium",
+    subject: "C Programming", topic: "Functions and Recursion", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1198,7 +1198,7 @@ const GATE_SYLLABUS = {
     options: ["volatile", "register", "const", "static"],
     correctAnswer: "const",
     explanation: "const declares read-only variable.",
-    subject: "C", topic: "Basics of C (Data Types, Operators)", difficulty: "medium",
+    subject: "C Programming", topic: "Basics of C (Data Types, Operators)", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1208,7 +1208,7 @@ const GATE_SYLLABUS = {
     options: ["auto", "register", "static", "public"],
     correctAnswer: ["auto", "register", "static"],
     explanation: "public is not a C storage class.",
-    subject: "C", topic: "Basics of C (Data Types, Operators)", difficulty: "hard",
+    subject: "C Programming", topic: "Basics of C (Data Types, Operators)", difficulty: "hard",
     marks: 2, negativeMarks: 0
   },
 
@@ -1217,7 +1217,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "15",
     explanation: "*p gives 10, then add 5.",
-    subject: "C", topic: "Pointers", difficulty: "easy",
+    subject: "C Programming", topic: "Pointers", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
 
@@ -1227,7 +1227,7 @@ const GATE_SYLLABUS = {
     options: ["open()", "fileopen()", "fopen()", "create()"],
     correctAnswer: "fopen()",
     explanation: "fopen() opens a file stream.",
-    subject: "C", topic: "File Handling", difficulty: "medium",
+    subject: "C Programming", topic: "File Handling", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1237,7 +1237,7 @@ const GATE_SYLLABUS = {
     options: ["Array indexing starts from 0", "Array size must always be runtime input", "Array elements are contiguous", "Array name can decay to pointer"],
     correctAnswer: ["Array indexing starts from 0", "Array elements are contiguous", "Array name can decay to pointer"],
     explanation: "Arrays need not always have runtime size.",
-    subject: "C", topic: "Arrays and Strings in C", difficulty: "hard",
+    subject: "C Programming", topic: "Arrays and Strings in C", difficulty: "hard",
     marks: 2, negativeMarks: 0
   },
 
@@ -1246,7 +1246,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "4",
     explanation: "3 characters + 1 null terminator.",
-    subject: "C", topic: "Arrays and Strings in C", difficulty: "medium",
+    subject: "C Programming", topic: "Arrays and Strings in C", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1259,7 +1259,7 @@ const GATE_SYLLABUS = {
     options: ["m + n", "m × n", "m - n", "m / n"],
     correctAnswer: "m × n",
     explanation: "Cartesian product contains ordered pairs from A and B.",
-    subject: "Discrete Maths", topic: "Sets, Relations and Functions", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Sets, Relations and Functions", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1269,7 +1269,7 @@ const GATE_SYLLABUS = {
     options: ["¬p ∧ ¬q", "¬p ∨ ¬q", "p ∨ q", "p → q"],
     correctAnswer: "¬p ∨ ¬q",
     explanation: "By De Morgan’s law.",
-    subject: "Discrete Maths", topic: "Propositional and Predicate Logic", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Propositional and Predicate Logic", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1279,7 +1279,7 @@ const GATE_SYLLABUS = {
     options: ["3", "6", "8", "9"],
     correctAnswer: "8",
     explanation: "A set with n elements has 2^n subsets.",
-    subject: "Discrete Maths", topic: "Sets, Relations and Functions", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Sets, Relations and Functions", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1289,7 +1289,7 @@ const GATE_SYLLABUS = {
     options: ["≤ on integers", "= on integers", "< on integers", "⊆ on power set"],
     correctAnswer: ["≤ on integers", "= on integers", "⊆ on power set"],
     explanation: "Strictly less than is not reflexive.",
-    subject: "Discrete Maths", topic: "Sets, Relations and Functions", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Sets, Relations and Functions", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1298,7 +1298,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "10",
     explanation: "Edges in Kn = n(n-1)/2 = 5×4/2.",
-    subject: "Discrete Maths", topic: "Graph Theory Basics", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Graph Theory Basics", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1308,7 +1308,7 @@ const GATE_SYLLABUS = {
     options: ["1", "2", "3", "4"],
     correctAnswer: "2",
     explanation: "Only bijections are onto here: 2! = 2.",
-    subject: "Discrete Maths", topic: "Sets, Relations and Functions", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Sets, Relations and Functions", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1318,7 +1318,7 @@ const GATE_SYLLABUS = {
     options: ["p ∨ ¬p", "p ∧ ¬p", "(p→q)∨(q→p)", "p↔¬p"],
     correctAnswer: ["p ∨ ¬p", "(p→q)∨(q→p)"],
     explanation: "These are always true.",
-    subject: "Discrete Maths", topic: "Propositional and Predicate Logic", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Propositional and Predicate Logic", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1328,7 +1328,7 @@ const GATE_SYLLABUS = {
     options: ["4", "8", "16", "32"],
     correctAnswer: "16",
     explanation: "Each position has 2 choices: 2^4.",
-    subject: "Discrete Maths", topic: "Combinatorics", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Combinatorics", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1337,7 +1337,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "5",
     explanation: "Sequence becomes 1,2,3,4,5.",
-    subject: "Discrete Maths", topic: "Recurrence Relations", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Recurrence Relations", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1347,7 +1347,7 @@ const GATE_SYLLABUS = {
     options: ["n", "n-1", "n+1", "2n"],
     correctAnswer: "n-1",
     explanation: "Basic property of trees.",
-    subject: "Discrete Maths", topic: "Graph Theory Basics", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Graph Theory Basics", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1357,7 +1357,7 @@ const GATE_SYLLABUS = {
     options: ["Tree", "Cycle of length 4", "Cycle of length 5", "Complete graph K2,3"],
     correctAnswer: ["Tree", "Cycle of length 4", "Complete graph K2,3"],
     explanation: "Odd cycle graph is not bipartite.",
-    subject: "Discrete Maths", topic: "Graph Theory Basics", difficulty: "hard",
+    subject: "Discrete Mathematics", topic: "Graph Theory Basics", difficulty: "hard",
     marks: 2, negativeMarks: 0
   },
 
@@ -1366,7 +1366,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "24",
     explanation: "All letters distinct: 4! = 24.",
-    subject: "Discrete Maths", topic: "Combinatorics", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Combinatorics", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
 
@@ -1376,7 +1376,7 @@ const GATE_SYLLABUS = {
     options: ["12", "15", "18", "30"],
     correctAnswer: "15",
     explanation: "Maximum edges = n(n-1)/2.",
-    subject: "Discrete Maths", topic: "Graph Theory Basics", difficulty: "hard",
+    subject: "Discrete Mathematics", topic: "Graph Theory Basics", difficulty: "hard",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1386,7 +1386,7 @@ const GATE_SYLLABUS = {
     options: ["Reflexive", "Symmetric", "Transitive", "Antisymmetric"],
     correctAnswer: ["Reflexive", "Symmetric", "Transitive"],
     explanation: "Equivalence relation requires these three.",
-    subject: "Discrete Maths", topic: "Sets, Relations and Functions", difficulty: "medium",
+    subject: "Discrete Mathematics", topic: "Sets, Relations and Functions", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1395,7 +1395,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "0.3",
     explanation: "P(A') = 1 - P(A).",
-    subject: "Discrete Maths", topic: "Combinatorics", difficulty: "easy",
+    subject: "Discrete Mathematics", topic: "Combinatorics", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
 
@@ -1706,7 +1706,7 @@ const GATE_SYLLABUS = {
     options: ["0", "1", "3", "-1"],
     correctAnswer: "1",
     explanation: "Determinant of identity matrix is always 1.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1716,7 +1716,7 @@ const GATE_SYLLABUS = {
     options: ["x", "2x", "x^3", "2"],
     correctAnswer: "2x",
     explanation: "d/dx(x^2)=2x.",
-    subject: "Mathematics", topic: "Calculus", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Calculus", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1726,7 +1726,7 @@ const GATE_SYLLABUS = {
     options: ["0.4", "0.6", "1.0", "0.2"],
     correctAnswer: "0.4",
     explanation: "Complement probability = 1 - P(A).",
-    subject: "Mathematics", topic: "Probability", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Probability", difficulty: "easy",
     marks: 1, negativeMarks: 0.33
   },
 
@@ -1736,7 +1736,7 @@ const GATE_SYLLABUS = {
     options: ["Identity matrix", "Diagonal matrix", "Row matrix", "Column matrix"],
     correctAnswer: ["Identity matrix", "Diagonal matrix"],
     explanation: "Identity and diagonal matrices are square matrices.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1745,7 +1745,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "1",
     explanation: "Integral of 1 from 0 to 1 equals 1.",
-    subject: "Mathematics", topic: "Calculus", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Calculus", difficulty: "easy",
     marks: 1, negativeMarks: 0
   },
 
@@ -1755,7 +1755,7 @@ const GATE_SYLLABUS = {
     options: ["0", "1", "2", "-1"],
     correctAnswer: "0",
     explanation: "Orthogonal vectors have dot product 0.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "medium",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1765,7 +1765,7 @@ const GATE_SYLLABUS = {
     options: ["x^2", "sin x", "|x|", "1/x"],
     correctAnswer: ["x^2", "sin x", "|x|"],
     explanation: "1/x is discontinuous at x=0.",
-    subject: "Mathematics", topic: "Calculus", difficulty: "medium",
+    subject: "Engineering Mathematics", topic: "Calculus", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1775,7 +1775,7 @@ const GATE_SYLLABUS = {
     options: ["0", "1", "2", "4"],
     correctAnswer: "2",
     explanation: "Both rows are linearly independent.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "medium",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1784,7 +1784,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "6",
     explanation: "3! = 6.",
-    subject: "Mathematics", topic: "Probability", difficulty: "medium",
+    subject: "Engineering Mathematics", topic: "Probability", difficulty: "medium",
     marks: 2, negativeMarks: 0
   },
 
@@ -1794,7 +1794,7 @@ const GATE_SYLLABUS = {
     options: ["0", "1", "∞", "Does not exist"],
     correctAnswer: "1",
     explanation: "Standard calculus limit.",
-    subject: "Mathematics", topic: "Calculus", difficulty: "medium",
+    subject: "Engineering Mathematics", topic: "Calculus", difficulty: "medium",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1804,7 +1804,7 @@ const GATE_SYLLABUS = {
     options: ["1", "0", "-1", "Depends on order"],
     correctAnswer: ["1"],
     explanation: "All eigenvalues of identity matrix are 1.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "hard",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "hard",
     marks: 2, negativeMarks: 0
   },
 
@@ -1813,7 +1813,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "4",
     explanation: "(2+4+6)/3 = 4.",
-    subject: "Mathematics", topic: "Numerical Methods", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Numerical Methods", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
 
@@ -1823,7 +1823,7 @@ const GATE_SYLLABUS = {
     options: ["P(A)+P(B)", "P(A)P(B)", "P(A)-P(B)", "1"],
     correctAnswer: "P(A)P(B)",
     explanation: "Definition of independent events.",
-    subject: "Mathematics", topic: "Probability", difficulty: "hard",
+    subject: "Engineering Mathematics", topic: "Probability", difficulty: "hard",
     marks: 2, negativeMarks: 0.66
   },
 
@@ -1833,7 +1833,7 @@ const GATE_SYLLABUS = {
     options: ["1/n^2", "1/n", "1/2^n", "1/n!"],
     correctAnswer: ["1/n^2", "1/2^n", "1/n!"],
     explanation: "Harmonic series 1/n diverges.",
-    subject: "Mathematics", topic: "Calculus", difficulty: "hard",
+    subject: "Engineering Mathematics", topic: "Calculus", difficulty: "hard",
     marks: 2, negativeMarks: 0
   },
 
@@ -1842,7 +1842,7 @@ const GATE_SYLLABUS = {
     type: "nat",
     correctAnswer: "12",
     explanation: "Rows × columns = 3 × 4.",
-    subject: "Mathematics", topic: "Linear Algebra", difficulty: "easy",
+    subject: "Engineering Mathematics", topic: "Linear Algebra", difficulty: "easy",
     marks: 2, negativeMarks: 0
   },
 
@@ -1979,7 +1979,7 @@ const GATE_SYLLABUS = {
   {
     questionText: "Which of the following are common data presentation forms?",
     type: "msq",
-    options: ["Bar Graph", "Pie Chart", "Table", "Compiler"],
+    options: ["Bar Graph", "Pie Chart", "Table", "Compiler Design"],
     correctAnswer: ["Bar Graph", "Pie Chart", "Table"],
     explanation: "Compiler is unrelated.",
     subject: "General Aptitude", topic: "Data Interpretation", difficulty: "medium",

@@ -15,7 +15,23 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 
 // Connect to database
-connectDB();
+const Group = require('./models/Group');
+const { readJson } = require('./utils/jsonUtils');
+
+connectDB().then(async () => {
+  try {
+    const count = await Group.countDocuments();
+    if (count === 0) {
+      const groupsData = await readJson(path.join(__dirname, 'data/groups.json'), []);
+      if (groupsData.length > 0) {
+        await Group.insertMany(groupsData);
+        console.log('Groups seeded successfully from json.');
+      }
+    }
+  } catch (err) {
+    console.error('Error seeding groups:', err);
+  }
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -48,11 +64,10 @@ app.use('/api/upload',     require('./routes/uploadRoutes'));
 // Serve uploaded images statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Groups Route (using jsonUtils)
-const { readJson } = require('./utils/jsonUtils');
+// Groups Route (using MongoDB)
 app.get('/api/groups', async (req, res) => {
   try {
-    const groups = await readJson(path.join(__dirname, 'data/groups.json'), []);
+    const groups = await Group.find({}, '-_id -__v'); // Exclude _id and __v for cleaner output matching old JSON
     res.json(groups);
   } catch (error) {
     res.status(500).json({ message: 'Failed to load groups' });

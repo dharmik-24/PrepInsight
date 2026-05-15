@@ -36,7 +36,7 @@ const GATE_SYLLABUS = {
     'LL and LR Parsers', 'Semantic Analysis',
     'Intermediate Code Generation', 'Code Optimization', 'Code Generation'
   ],
-  'C': [
+  'C Programming': [
     'Basics of C (Data Types, Operators)',
     'Control Flow (if/else, loops, switch)',
     'Functions and Recursion',
@@ -46,7 +46,7 @@ const GATE_SYLLABUS = {
     'Dynamic Memory Allocation',
     'File Handling'
   ],
-  'Discrete Maths': [
+  'Discrete Mathematics': [
     'Propositional and Predicate Logic',
     'Sets, Relations and Functions',
     'Combinatorics',
@@ -69,7 +69,7 @@ const GATE_SYLLABUS = {
     'Sequential Circuits', 'Flip-Flops', 'Counters and Registers',
     'Number Systems', 'K-Map Minimization'
   ],
-  'Mathematics': [
+  'Engineering Mathematics': [
     'Propositional Logic', 'Set Theory', 'Relations and Functions',
     'Graph Theory', 'Combinatorics', 'Probability',
     'Linear Algebra', 'Calculus', 'Numerical Methods'

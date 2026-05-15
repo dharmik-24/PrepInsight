@@ -3,6 +3,15 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { Readable } = require('stream');
+
+// Configure Cloudinary (reusing same credentials as materialRoutes)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, '../uploads');
@@ -10,16 +19,8 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Multer config
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Multer config (memory storage)
+const storage = multer.memoryStorage();
 
 const upload = multer({ 
   storage: storage,
@@ -38,9 +39,33 @@ router.post('/', upload.single('image'), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
-    // Return the URL path to the uploaded file
-    const imageUrl = `/uploads/${req.file.filename}`;
-    res.status(200).json({ imageUrl });
+    
+    if (!process.env.CLOUDINARY_API_KEY) {
+       return res.status(500).json({ message: 'Cloudinary not configured.' });
+    }
+
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: 'prepinsight-chat-images',
+        resource_type: 'image',
+        transformation: [
+          { width: 800, crop: 'limit' },
+          { quality: 'auto' },
+          { fetch_format: 'auto' }
+        ]
+      },
+      (error, result) => {
+        if (error) {
+          console.error('Cloudinary upload error:', error);
+          return res.status(500).json({ message: 'Failed to upload to Cloudinary' });
+        }
+        // Return the Cloudinary secure URL as imageUrl
+        res.status(200).json({ imageUrl: result.secure_url });
+      }
+    );
+
+    Readable.from(req.file.buffer).pipe(uploadStream);
+
   } catch (error) {
     console.error('Upload Error:', error);
     res.status(500).json({ message: 'Failed to upload image' });

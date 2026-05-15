@@ -66,43 +66,66 @@ const handleUpdate = async () => {
   return (
     <div className="profile-container">
       <div className="profile-card">
-
-        {/* Default Profile Image */}
-        <img
-        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-        className="profile-img"
-/>
-
-        <h2>User Profile</h2>
-
-        {edit ? (
-          <>
-            <input
-              value={user?.name || ""}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
-              className="profile-input"
+        <div className="profile-content">
+          <div className="profile-img-wrapper">
+            {/* Default Profile Image */}
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              className="profile-img"
+              alt="Profile"
             />
+          </div>
 
-            <input
-              value={user?.email || ""}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-              className="profile-input"
-            />
+          <h2 className="profile-title">My Profile</h2>
 
-            <button onClick={handleUpdate} className="btn-save">
-              Save Changes
-            </button>
-          </>
-        ) : (
-          <>
-            <p><b>Name:</b> {user?.name}</p>
-            <p><b>Email:</b> {user?.email}</p>
+          {edit ? (
+            <div className="profile-form">
+              <div className="profile-input-group">
+                <label>Full Name</label>
+                <input
+                  value={user?.name || ""}
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
+                  className="profile-input"
+                  placeholder="Enter your name"
+                />
+              </div>
 
-            <button onClick={() => setEdit(true)} className="btn-edit">
-              Edit Profile
-            </button>
-          </>
-        )}
+              <div className="profile-input-group">
+                <label>Email Address</label>
+                <input
+                  value={user?.email || ""}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  className="profile-input"
+                  placeholder="Enter your email"
+                />
+              </div>
+
+              <button onClick={handleUpdate} className="btn-profile-action btn-save">
+                ✓ Save Changes
+              </button>
+              <button onClick={() => { setEdit(false); fetchProfile(); }} className="btn-profile-action btn-cancel">
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="profile-info">
+                <div className="info-group">
+                  <span className="info-label">Full Name</span>
+                  <span className="info-value">{user?.name || "N/A"}</span>
+                </div>
+                <div className="info-group">
+                  <span className="info-label">Email Address</span>
+                  <span className="info-value">{user?.email || "N/A"}</span>
+                </div>
+              </div>
+
+              <button onClick={() => setEdit(true)} className="btn-profile-action btn-edit">
+                ✎ Edit Profile
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

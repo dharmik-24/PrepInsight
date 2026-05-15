@@ -28,12 +28,15 @@ const Analysis = () => {
 
   if (loading) return <div className="loader">Loading analysis...</div>;
 
+  // Filter mock results and reverse to show oldest -> newest
+  const mockResultsForCharts = [...results].filter(r => r.test?.testType === 'full-mock').reverse();
+
   // Score trend over time
   const trendData = {
-    labels: results.map((_, i) => `Test ${i + 1}`),
+    labels: mockResultsForCharts.map((_, i) => `Mock ${i + 1}`),
     datasets: [{
       label: 'Score',
-      data: results.map(r => r.score),
+      data: mockResultsForCharts.map(r => r.score),
       borderColor: '#6366f1',
       backgroundColor: 'rgba(99,102,241,0.1)',
       fill: true,
@@ -43,10 +46,10 @@ const Analysis = () => {
 
   // Accuracy trend
   const accuracyData = {
-    labels: results.map((_, i) => `Test ${i + 1}`),
+    labels: mockResultsForCharts.map((_, i) => `Mock ${i + 1}`),
     datasets: [{
       label: 'Accuracy %',
-      data: results.map(r => r.accuracy),
+      data: mockResultsForCharts.map(r => r.accuracy),
       borderColor: '#10b981',
       backgroundColor: 'rgba(16,185,129,0.1)',
       fill: true,
@@ -103,16 +106,23 @@ const Analysis = () => {
       {results.length > 0 ? (
         <>
           {/* Trend Charts */}
-          <div className="charts-row">
-            <div className="chart-card">
-              <h3>📈 Score Trend</h3>
-              <Line data={trendData} options={{ responsive: true }} />
+          {mockResultsForCharts.length > 0 ? (
+            <div className="charts-row">
+              <div className="chart-card">
+                <h3>📈 Score Trend (Mock Tests)</h3>
+                <Line data={trendData} options={{ responsive: true }} />
+              </div>
+              <div className="chart-card">
+                <h3>🎯 Accuracy Trend (Mock Tests)</h3>
+                <Line data={accuracyData} options={{ responsive: true }} />
+              </div>
             </div>
-            <div className="chart-card">
-              <h3>🎯 Accuracy Trend</h3>
-              <Line data={accuracyData} options={{ responsive: true }} />
+          ) : (
+            <div className="card" style={{ textAlign: 'center', padding: '30px', marginBottom: '20px' }}>
+              <h3 style={{ margin: 0, marginBottom: '10px' }}>📈 Trend Analysis</h3>
+              <p style={{ color: '#6c757d', fontSize: '1.1rem', margin: 0 }}>Attempt a Full Mock Test to generate your Score and Accuracy trends.</p>
             </div>
-          </div>
+          )}
 
           {/* Weak Topics */}
           {topWeak.length > 0 && (

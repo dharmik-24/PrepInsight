@@ -3,8 +3,8 @@ import API from '../api/axios';
 
 const FALLBACK_SUBJECTS = [
   'Data Structures', 'Algorithms', 'Operating Systems', 'DBMS',
-  'Computer Networks', 'TOC', 'Compiler Design', 'C', 'Discrete Maths', 'COA', 'Digital Logic',
-  'Mathematics', 'General Aptitude'
+  'Computer Networks', 'TOC', 'Compiler Design', 'C Programming', 'Discrete Mathematics', 'COA', 'Digital Logic',
+  'Engineering Mathematics', 'General Aptitude'
 ];
 
 const StudyLog = () => {

@@ -1,8 +1,6 @@
 const path = require('path');
-const { readJson, writeJson } = require('../utils/jsonUtils');
-
-const groupsFile = path.join(__dirname, '../data/groups.json');
-const messagesDir = path.join(__dirname, '../data/messages');
+const Group = require('../models/Group');
+const Message = require('../models/Message');
 
 // Store active users in memory or could use a json file, but memory is fine for Socket IDs
 const activeUsers = new Map(); // socketId -> { userId, name, groupId }
@@ -30,14 +28,12 @@ module.exports = (io) => {
         });
 
         // Read group info and add user to members if not present
-        const groups = await readJson(groupsFile, []);
-        const groupIndex = groups.findIndex(g => g.groupId === groupId);
+        const group = await Group.findOne({ groupId });
         
-        if (groupIndex !== -1) {
-          const group = groups[groupIndex];
+        if (group) {
           if (!group.members.includes(user.name)) {
             group.members.push(user.name);
-            await writeJson(groupsFile, groups);
+            await group.save();
           }
           
           // Emit updated member count to everyone in the room
@@ -47,9 +43,8 @@ module.exports = (io) => {
           });
         }
 
-        // Fetch old messages for this group
-        const messagesFile = path.join(messagesDir, `${groupId}.json`);
-        const messages = await readJson(messagesFile, []);
+        // Fetch old messages for this group from DB
+        const messages = await Message.find({ groupId }).sort({ timestamp: 1 });
         
         // Send old messages to the user who just joined
         socket.emit('loadMessages', messages);
@@ -63,22 +58,16 @@ module.exports = (io) => {
     // Handle sending a message
     socket.on('sendMessage', async ({ groupId, sender, message, imageUrl }) => {
       try {
-        const newMessage = {
-          id: Date.now().toString(),
+        // Save to DB
+        const savedMessage = await Message.create({
+          groupId,
           sender,
           message,
-          imageUrl: imageUrl || null,
-          timestamp: new Date().toISOString()
-        };
-
-        // Save to JSON
-        const messagesFile = path.join(messagesDir, `${groupId}.json`);
-        const messages = await readJson(messagesFile, []);
-        messages.push(newMessage);
-        await writeJson(messagesFile, messages);
+          imageUrl: imageUrl || null
+        });
 
         // Broadcast to everyone in the room
-        io.to(groupId).emit('newMessage', newMessage);
+        io.to(groupId).emit('newMessage', savedMessage);
       } catch (error) {
         console.error('Error sending message:', error);
       }
@@ -90,13 +79,11 @@ module.exports = (io) => {
         socket.leave(groupId);
         activeUsers.delete(socket.id);
 
-        const groups = await readJson(groupsFile, []);
-        const groupIndex = groups.findIndex(g => g.groupId === groupId);
+        const group = await Group.findOne({ groupId });
         
-        if (groupIndex !== -1) {
-          const group = groups[groupIndex];
+        if (group) {
           group.members = group.members.filter(member => member !== userName);
-          await writeJson(groupsFile, groups);
+          await group.save();
 
           io.to(groupId).emit('groupUpdated', {
             groupId,

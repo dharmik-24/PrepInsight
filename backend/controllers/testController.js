@@ -79,23 +79,38 @@ const buildSubjectWiseQuestions = (subject) => {
   };
 
   const result = [];
+  const usedQuestions = new Set();
 
   for (const slot of TEST_BLUEPRINT) {
-    const filtered = subjectPool.filter((q) => q.type === slot.type && q.marks === slot.marks);
+    // Get all unused questions of the exact type and marks
+    const exactMatches = subjectPool.filter(
+      (q) => q.type === slot.type && q.marks === slot.marks && !usedQuestions.has(q.questionText)
+    );
 
     for (let i = 0; i < slot.count; i++) {
-      if (filtered[i]) {
-        result.push(cloneQuestion(filtered[i]));
+      if (exactMatches[i]) {
+        result.push(cloneQuestion(exactMatches[i]));
+        usedQuestions.add(exactMatches[i].questionText);
       } else {
-        result.push(
-          buildFallbackQuestion({
-            subject,
-            topic: nextTopic(),
-            type: slot.type,
-            marks: slot.marks,
-            index: i
-          })
+        // Fallback: Find ANY unused question with the same marks to avoid placeholders
+        const anyUnused = subjectPool.find(
+          (q) => q.marks === slot.marks && !usedQuestions.has(q.questionText)
         );
+        
+        if (anyUnused) {
+          result.push(cloneQuestion(anyUnused));
+          usedQuestions.add(anyUnused.questionText);
+        } else {
+          result.push(
+            buildFallbackQuestion({
+              subject,
+              topic: nextTopic(),
+              type: slot.type,
+              marks: slot.marks,
+              index: i
+            })
+          );
+        }
       }
     }
   }

@@ -16,6 +16,7 @@ const GroupChat = () => {
   const [groupInfo, setGroupInfo] = useState(null);
   const [groups, setGroups] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [optimisticMessages, setOptimisticMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -32,7 +33,7 @@ const GroupChat = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, optimisticMessages]);
 
   // Fetch groups to show in sidebar and get current group info
   useEffect(() => {
@@ -115,35 +116,65 @@ const GroupChat = () => {
     e.preventDefault();
     if (!inputMessage.trim() && !imageFile) return;
 
-    let imageUrl = null;
+    const tempId = 'temp-' + Date.now();
+    const messageToSend = inputMessage.trim();
+    const fileToSend = imageFile;
 
-    if (imageFile) {
+    // 1. Optimistic UI Update: Show message immediately
+    const tempMessage = {
+      id: tempId,
+      sender: user.name,
+      message: messageToSend,
+      imageUrl: imagePreview, // Use the local base64 preview instantly
+      timestamp: new Date().toISOString(),
+      isUploading: !!fileToSend
+    };
+    
+    setOptimisticMessages(prev => [...prev, tempMessage]);
+    
+    // 2. Clear input fields immediately for instant UI response
+    setInputMessage('');
+    clearImage();
+
+    let uploadedImageUrl = null;
+
+    // 3. Upload image in the background if exists
+    if (fileToSend) {
       setIsUploading(true);
       const formData = new FormData();
-      formData.append('image', imageFile);
+      formData.append('image', fileToSend);
       try {
         const response = await API.post('/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        imageUrl = SOCKET_URL + response.data.imageUrl; // absolute URL
+        // Cloudinary returns a complete secure_url
+        uploadedImageUrl = response.data.imageUrl; 
       } catch (err) {
         console.error('Image upload failed', err);
         alert('Failed to upload image.');
+        setOptimisticMessages(prev => prev.filter(m => m.id !== tempId));
         setIsUploading(false);
         return;
       }
       setIsUploading(false);
     }
 
+    // 4. Send the final message via Socket
     if (socket) {
       socket.emit('sendMessage', {
         groupId,
         sender: user.name,
-        message: inputMessage.trim(),
-        imageUrl
+        message: messageToSend,
+        imageUrl: uploadedImageUrl
       });
-      setInputMessage('');
-      clearImage();
+      
+      // The real message will bounce back via socket very quickly.
+      // We remove the optimistic one to prevent duplicates.
+      setTimeout(() => {
+        setOptimisticMessages(prev => prev.filter(m => m.id !== tempId));
+      }, 500);
+    } else {
+      setOptimisticMessages(prev => prev.filter(m => m.id !== tempId));
     }
   };
 
@@ -211,12 +242,12 @@ const GroupChat = () => {
 
         {/* Messages Area */}
         <div className="chat-messages" style={{ flex: 1, padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {messages.length === 0 ? (
+          {messages.length === 0 && optimisticMessages.length === 0 ? (
             <div style={{ textAlign: 'center', margin: 'auto', background: 'rgba(255,255,255,0.8)', padding: '10px 20px', borderRadius: '15px', color: '#495057', fontSize: '0.9rem' }}>
               Welcome to {groupInfo?.groupName}! Send a message to start the discussion.
             </div>
           ) : (
-            messages.map((msg, idx) => {
+            [...messages, ...optimisticMessages].map((msg, idx) => {
               const isMine = msg.sender === user.name;
               const msgDate = new Date(msg.timestamp);
               const timeString = msgDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -242,7 +273,9 @@ const GroupChat = () => {
                     boxShadow: '0 1px 1px rgba(0,0,0,0.1)',
                     position: 'relative',
                     borderTopRightRadius: isMine ? '0' : '8px',
-                    borderTopLeftRadius: !isMine ? '0' : '8px'
+                    borderTopLeftRadius: !isMine ? '0' : '8px',
+                    opacity: msg.isUploading ? 0.6 : 1,
+                    transition: 'opacity 0.3s'
                   }}>
                     {msg.imageUrl && (
                       <img 

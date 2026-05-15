@@ -258,6 +258,14 @@ const MockTestAttempt = () => {
       setCurrentQuestionIndex(newIndex);
       if (newIndex < 10) setActiveSection('Aptitude');
       else setActiveSection('Technical');
+    } else {
+      if (test.questions.length > 10) {
+        setCurrentQuestionIndex(10);
+        setActiveSection('Technical');
+      } else {
+        setCurrentQuestionIndex(0);
+        setActiveSection('Aptitude');
+      }
     }
   };
 
@@ -404,7 +412,6 @@ const MockTestAttempt = () => {
             
             <button 
               className="btn-primary" 
-              disabled={currentQuestionIndex === test.questions.length - 1}
               onClick={handleSaveAndNext}
             >
             Save and Next

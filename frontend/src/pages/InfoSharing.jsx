@@ -4,7 +4,7 @@ import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const InfoSharing = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,12 @@ const InfoSharing = () => {
       setError(null);
     } catch (err) {
       console.error(err);
-      setError('Failed to load materials. Please ensure Cloudinary is configured correctly.');
+      if (err.response?.status === 401) {
+        logout();
+        navigate('/login');
+      } else {
+        setError(err.response?.data?.message || 'Failed to load materials. Please ensure Cloudinary is configured correctly.');
+      }
     } finally {
       setLoading(false);
     }
