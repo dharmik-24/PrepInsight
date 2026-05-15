@@ -1,17 +1,6 @@
 const Test = require('../models/Test');
 const { QUESTION_BANK } = require('../data/questionBank');
 const GATE_SYLLABUS = require('../data/gateSyllabus');
-<<<<<<< Updated upstream
-
-const TEST_BLUEPRINT = [
-  { type: 'mcq', marks: 1, count: 2 },
-  { type: 'mcq', marks: 2, count: 4 },
-  { type: 'msq', marks: 1, count: 2 },
-  { type: 'msq', marks: 2, count: 3 },
-  { type: 'nat', marks: 1, count: 1 },
-  { type: 'nat', marks: 2, count: 3 }
-];
-=======
 const {
   TEST_BLUEPRINT,
   TEST_CONSTRAINTS
@@ -22,7 +11,6 @@ const {
 } = require('../services/testGenerationService');
 
 const AppError = require('../utils/AppError');
->>>>>>> Stashed changes
 
 // ================= MOCK TEST IMPORTS =================
 
@@ -138,23 +126,6 @@ const buildSubjectWiseQuestions = (subject) => {
   const result = [];
 
   for (const slot of TEST_BLUEPRINT) {
-<<<<<<< Updated upstream
-    const filtered = subjectPool.filter((q) => q.type === slot.type && q.marks === slot.marks);
-
-    for (let i = 0; i < slot.count; i++) {
-      if (filtered[i]) {
-        result.push(cloneQuestion(filtered[i]));
-      } else {
-        result.push(
-          buildFallbackQuestion({
-            subject,
-            topic: nextTopic(),
-            type: slot.type,
-            marks: slot.marks,
-            index: i
-          })
-        );
-=======
 
     const exactMatches = subjectPool.filter(
       (q) =>
@@ -195,7 +166,6 @@ const buildSubjectWiseQuestions = (subject) => {
             })
           );
         }
->>>>>>> Stashed changes
       }
     }
   }
@@ -271,17 +241,7 @@ const seedTests = async (req, res) => {
     }
 
     res.json({
-<<<<<<< Updated upstream
-      message: `Seeded ${created} subject-wise tests successfully`,
-      blueprint: {
-        totalQuestions: 15,
-        durationMinutes: 45,
-        totalMarks: 25,
-        distribution: { mcq: 6, msq: 5, nat: 4, oneMark: 5, twoMark: 10 }
-      }
-=======
       message: 'All tests seeded successfully'
->>>>>>> Stashed changes
     });
 
   } catch (error) {
@@ -294,9 +254,6 @@ const seedTests = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
-// Get all available tests
-=======
 // ========================= GET SUBJECTS =========================
 
 const getSubjects = async (req, res) => {
@@ -375,7 +332,6 @@ const generateTest = async (req, res, next) => {
 
 // ========================= GET ALL TESTS =========================
 
->>>>>>> Stashed changes
 const getTests = async (req, res) => {
 
   try {
@@ -434,9 +390,6 @@ const getTestById = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
-module.exports = { seedTests, getTests, getTestById };
-=======
 module.exports = {
   seedTests,
   getSubjects,
@@ -444,4 +397,3 @@ module.exports = {
   getTests,
   getTestById
 };
->>>>>>> Stashed changes
