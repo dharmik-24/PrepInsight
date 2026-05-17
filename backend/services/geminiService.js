@@ -61,10 +61,11 @@ const generateText = async (prompt, maxRetries = 3) => {
     } catch (error) {
       const mappedError = mapGeminiError(error);
       
-      if (mappedError.code === "GEMINI_RATE_LIMIT" && attempt < maxRetries) {
+      if ((mappedError.code === "GEMINI_RATE_LIMIT" || mappedError.code === "GENERATION_TIMEOUT") && attempt < maxRetries) {
         attempt++;
         const delay = Math.min(1000 * Math.pow(2, attempt) + Math.random() * 1000, 10000); // Exponential backoff with jitter
-        logger.warn(`Gemini rate limited. Retrying in ${Math.round(delay)}ms... (Attempt ${attempt}/${maxRetries})`);
+        const reason = mappedError.code === "GEMINI_RATE_LIMIT" ? "rate limited" : "timed out";
+        logger.warn(`Gemini ${reason}. Retrying in ${Math.round(delay)}ms... (Attempt ${attempt}/${maxRetries})`);
         await sleep(delay);
         continue;
       }
