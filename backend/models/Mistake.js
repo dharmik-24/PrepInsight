@@ -17,6 +17,8 @@ const mistakeSchema = new mongoose.Schema({
   testId: { type: mongoose.Schema.Types.ObjectId, ref: 'Test' },
   // User can mark as revised
   isRevised: { type: Boolean, default: false },
+  // User can add custom notes
+  note: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

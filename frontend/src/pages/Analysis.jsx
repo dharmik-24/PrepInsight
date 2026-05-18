@@ -39,17 +39,7 @@ const Analysis = () => {
     r => r.test?.testType === 'full-mock'
   );
 
-  // ✅ STEP 3: OVERALL aggregation (all attempts included)
-  const totalScore = sortedResults.reduce((sum, r) => sum + (r.score || 0), 0);
-  const totalAccuracy = sortedResults.reduce((sum, r) => sum + (r.accuracy || 0), 0);
-
-  const overallAvgScore = sortedResults.length
-    ? (totalScore / sortedResults.length).toFixed(2)
-    : 0;
-
-  const overallAvgAccuracy = sortedResults.length
-    ? (totalAccuracy / sortedResults.length).toFixed(2)
-    : 0;
+  // ✅ STEP 3: OVERALL aggregation (deprecated - use rankData instead)
 
   // =======================
   // 📈 SCORE TREND
@@ -122,10 +112,9 @@ const Analysis = () => {
             </div>
 
             <div className="rank-details">
-              {/* ✅ FIX: show true aggregated values */}
-              <p>Avg Score: <strong>{overallAvgScore}</strong></p>
-              <p>Avg Accuracy: <strong>{overallAvgAccuracy}%</strong></p>
-              <p>Mock Tests Taken: <strong>{sortedResults.length}</strong></p>
+              <p>Avg Score: <strong>{rankData.avgScore}</strong></p>
+              <p>Avg Accuracy: <strong>{rankData.avgAccuracy}%</strong></p>
+              <p>Mock Tests Taken: <strong>{rankData.totalTests}</strong></p>
             </div>
           </div>
 

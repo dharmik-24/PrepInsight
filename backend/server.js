@@ -16,6 +16,8 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 // Connect to database
 const Group = require('./models/Group');
+const Test = require('./models/Test');
+const { seedTestsLogic } = require('./controllers/testController');
 const { readJson } = require('./utils/jsonUtils');
 
 connectDB().then(async () => {
@@ -28,8 +30,15 @@ connectDB().then(async () => {
         console.log('Groups seeded successfully from json.');
       }
     }
+
+    const testCount = await Test.countDocuments({ testType: 'full-mock' });
+    if (testCount < 4) {
+      console.log('Missing mock tests found. Seeding tests...');
+      await seedTestsLogic();
+      console.log('Tests seeded successfully.');
+    }
   } catch (err) {
-    console.error('Error seeding groups:', err);
+    console.error('Error during startup seeding:', err);
   }
 });
 

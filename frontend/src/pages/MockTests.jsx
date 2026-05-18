@@ -9,17 +9,32 @@ const MockTestCard = ({ id, title }) => {
     <div
       className="card test-card"
       style={{
-        padding: '1.5rem',
+        padding: '2rem',
         textAlign: 'center',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        background: 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+        border: '1px solid #e2e8f0',
+        borderRadius: '16px',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-4px)';
+        e.currentTarget.style.boxShadow = '0 14px 30px rgba(0,0,0,0.1)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'none';
+        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.05)';
       }}
     >
       <h4
         style={{
-          marginBottom: '1rem',
-          fontSize: '1.2rem',
-          color: '#fff'
+          marginBottom: '0.75rem',
+          fontSize: '1.4rem',
+          fontWeight: '700',
+          color: '#1e293b',
+          letterSpacing: '-0.5px'
         }}
       >
         {title}
@@ -29,18 +44,31 @@ const MockTestCard = ({ id, title }) => {
         className="test-meta"
         style={{
           justifyContent: 'center',
-          marginBottom: '1.5rem',
-          flex: 1
+          marginBottom: '2rem',
+          flex: 1,
+          gap: '1.25rem',
+          display: 'flex'
         }}
       >
-        <span style={{ marginRight: '10px' }}>⏱ 180 min</span>
-        <span>🏅 100 Marks</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#64748b', fontWeight: '500' }}>
+          <span style={{ fontSize: '1.2rem' }}>⏱</span> 180 min
+        </span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#64748b', fontWeight: '500' }}>
+          <span style={{ fontSize: '1.2rem' }}>🏅</span> 100 Marks
+        </span>
       </div>
 
       <button
         className="btn-primary"
         onClick={() => navigate(`/mock-test/${id}`)}
-        style={{ width: '100%' }}
+        style={{ 
+          width: '100%', 
+          padding: '0.85rem', 
+          borderRadius: '10px',
+          fontSize: '1.05rem',
+          background: 'linear-gradient(90deg, #6366f1, #4f46e5)',
+          boxShadow: '0 4px 14px rgba(99, 102, 241, 0.3)'
+        }}
       >
         Start Test →
       </button>
@@ -70,7 +98,7 @@ useEffect(() => {
         const typeMatches = test.testType === "full-mock";
         
         return titleMatches || typeMatches;
-      });
+      }).sort((a, b) => a.title.localeCompare(b.title));
 
       console.log("Filtered mock tests matching criteria:", mockTests);
       setTests(mockTests);

@@ -116,6 +116,7 @@ const buildSubjectWiseQuestions = (subject) => {
   const topics = GATE_SYLLABUS[subject] || ['Core Concepts'];
 
   const topicCursor = { value: 0 };
+  const usedQuestions = new Set();
 
   const nextTopic = () => {
     const topic = topics[topicCursor.value % topics.length];
@@ -175,10 +176,7 @@ const buildSubjectWiseQuestions = (subject) => {
 
 // ========================= SEED TESTS =========================
 
-const seedTests = async (req, res) => {
-
-  try {
-
+const seedTestsLogic = async () => {
     // DELETE OLD TESTS
     await Test.deleteMany({});
 
@@ -240,14 +238,16 @@ const seedTests = async (req, res) => {
       console.log(`${mock.title} inserted`);
     }
 
+};
+
+const seedTests = async (req, res) => {
+  try {
+    await seedTestsLogic();
     res.json({
       message: 'All tests seeded successfully'
     });
-
   } catch (error) {
-
     console.error(error);
-
     res.status(500).json({
       message: error.message
     });
@@ -391,6 +391,7 @@ const getTestById = async (req, res) => {
 };
 
 module.exports = {
+  seedTestsLogic,
   seedTests,
   getSubjects,
   generateTest,
