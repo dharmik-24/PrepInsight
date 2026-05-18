@@ -14,8 +14,6 @@ The application combines a **React-based frontend** with a **Node.js/Express bac
 - User registration and login with JWT token-based authentication
 - Password hashing using bcryptjs
 - User profile management with daily study goal tracking
-- Theme preference (light/dark mode)
-- Bookmark functionality for important questions
 
 ### 2. **Test Generation & Management**
 - **Subject-wise Tests**: AI-powered test generation using Google Gemini API
@@ -612,5 +610,4 @@ The platform is designed to help GATE aspirants prepare efficiently through pers
 
 ---
 
-**Created**: May 13, 2026
-**Version**: 1.0
+
